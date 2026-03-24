@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeadL — AI-лидогенерация из Telegram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#FF6B35',
+            dark: '#0A0A0F',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #a0a0b0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .accent-text {
+      background: linear-gradient(135deg, #FF6B35 0%, #ff8c5a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-btn {
+      box-shadow: 0 0 24px rgba(255, 107, 53, 0.4);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .glow-btn:hover {
+      box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .card-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    .card-float-delay {
+      animation: float 4s ease-in-out 1.2s infinite;
+    }
+    .card-float-delay2 {
+      animation: float 4s ease-in-out 2.4s infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .dot-pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .noise-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    .lead-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      transition: border-color 0.2s;
+    }
+    .lead-card:hover {
+      border-color: rgba(255, 107, 53, 0.3);
+    }
+
+    .badge-new {
+      animation: badge-appear 0.4s ease forwards;
+    }
+    @keyframes badge-appear {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .scroll-hint {
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+  </style>
+</head>
+<body class="bg-dark text-white overflow-x-hidden">
+
+  <!-- Hero -->
+  <section class="relative min-h-screen flex flex-col grid-bg noise-overlay">
+
+    <!-- Радиальное свечение слева -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div style="position:absolute;top:-10%;left:-5%;width:600px;height:600px;background:radial-gradient(circle, rgba(255,107,53,0.12) 0%, transparent 70%);border-radius:50%;"></div>
+      <div style="position:absolute;bottom:0;right:10%;width:400px;height:400px;background:radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);border-radius:50%;"></div>
+    </div>
+
+    <!-- Навбар -->
+    <nav class="relative z-10 flex items-center justify-between px-5 py-5 max-w-7xl mx-auto w-full">
+      <div class="flex items-center gap-2">
+        <div style="width:28px;height:28px;background:#FF6B35;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight">LeadL</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm text-white/60">
+        <a href="#" class="hover:text-white transition-colors">Как работает</a>
+        <a href="#" class="hover:text-white transition-colors">Тарифы</a>
+        <a href="#" class="hover:text-white transition-colors">Кейсы</a>
+      </div>
+      <a href="#" class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors" style="border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);" onmouseover="this.style.borderColor='rgba(255,107,53,0.5)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.8)'">
+        Войти
+      </a>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="relative z-10 flex-1 flex items-center px-5 py-12 max-w-7xl mx-auto w-full">
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 w-full">
+
+        <!-- Левая колонка — текст -->
+        <div class="flex-1 flex flex-col items-start max-w-xl">
+
+          <!-- Бейдж -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full mb-6" style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.25);">
+            <span class="dot-pulse w-1.5 h-1.5 rounded-full bg-accent inline-block"></span>
+            <span class="text-xs font-semibold text-accent tracking-wide uppercase">AI работает прямо сейчас</span>
+          </div>
+
+          <!-- Заголовок -->
+          <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-extrabold leading-[1.1] tracking-tight mb-5">
+            <span class="gradient-text">Клиенты ищут вас прямо сейчас</span>
+            <br />
+            <span class="gradient-text">в Telegram-чатах.</span>
+            <br />
+            <span class="accent-text">Мы их находим.</span>
+          </h1>
+
+          <!-- Подзаголовок -->
+          <p class="text-base sm:text-lg leading-relaxed mb-8" style="color:rgba(255,255,255,0.55);">
+            AI мониторит тысячи чатов 24/7 и присылает контакты людей,
+            которым нужны ваши услуги.
+            <span style="color:rgba(255,255,255,0.8);font-weight:500;">Настройка — 4 минуты.</span>
+          </p>
+
+          <!-- CTA -->
+          <div class="flex flex-col w-full sm:w-auto gap-3">
+            <a href="#" class="glow-btn w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl font-bold text-base text-white" style="background:linear-gradient(135deg, #FF6B35 0%, #e85520 100%);">
+              Получить первых лидов бесплатно
+              <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+            </a>
+
+            <!-- Соц. доказательство -->
+            <div class="flex items-center gap-3 px-1">
+              <!-- Аватары -->
+              <div class="flex -space-x-2">
+                <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold" style="background:#6366f1;border-color:#0A0A0F;">А</div>
+                <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold" style="background:#10b981;border-color:#0A0A0F;">М</div>
+                <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold" style="background:#f59e0b;border-color:#0A0A0F;">С</div>
+                <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold" style="background:#ec4899;border-color:#0A0A0F;">Д</div>
+              </div>
+              <span class="text-sm" style="color:rgba(255,255,255,0.5);">
+                <span style="color:rgba(255,255,255,0.85);font-weight:600;">160+ компаний</span> уже получают лидов
+              </span>
+            </div>
+          </div>
+
+          <!-- Характеристики -->
+          <div class="flex flex-wrap gap-x-6 gap-y-2 mt-8">
+            <div class="flex items-center gap-1.5 text-sm" style="color:rgba(255,255,255,0.45);">
+              <i data-lucide="shield-check" style="width:14px;height:14px;color:#FF6B35;"></i>
+              Без спама
+            </div>
+            <div class="flex items-center gap-1.5 text-sm" style="color:rgba(255,255,255,0.45);">
+              <i data-lucide="zap" style="width:14px;height:14px;color:#FF6B35;"></i>
+              Первые лиды за 15 минут
+            </div>
+            <div class="flex items-center gap-1.5 text-sm" style="color:rgba(255,255,255,0.45);">
+              <i data-lucide="x-circle" style="width:14px;height:14px;color:#FF6B35;"></i>
+              Без карты при регистрации
+            </div>
+          </div>
+        </div>
+
+        <!-- Правая колонка — UI-макет -->
+        <div class="flex-1 w-full max-w-sm lg:max-w-md flex flex-col gap-4 select-none">
+
+          <!-- Заголовок панели -->
+          <div class="flex items-center justify-between px-4 py-3 rounded-xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="bot" style="width:16px;height:16px;color:#FF6B35;"></i>
+              <span class="text-sm font-semibold">Входящие лиды</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="dot-pulse w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+              <span class="text-xs" style="color:rgba(255,255,255,0.4);">сканирование…</span>
+            </div>
+          </div>
+
+          <!-- Карточки лидов -->
+          <div class="card-float lead-card p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">А</div>
+                <div>
+                  <p class="text-sm font-semibold">Алексей Ковалёв</p>
+                  <p class="text-xs" style="color:rgba(255,255,255,0.4);">@alex_dev · 2 мин назад</p>
+                </div>
+              </div>
+              <span class="badge-new text-xs font-semibold px-2 py-0.5 rounded-full" style="background:rgba(255,107,53,0.15);color:#FF6B35;">Новый</span>
+            </div>
+            <p class="text-sm mb-3" style="color:rgba(255,255,255,0.7);">«Посоветуйте кто делал <span style="color:#FF6B35;font-weight:600;">SEO для интернет-магазина</span>? Бюджет есть, нужно срочно»</p>
+            <div class="flex items-center gap-2">
+              <span class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);">
+                <i data-lucide="message-circle" style="width:11px;height:11px;"></i>
+                Чат «Бизнес Москва»
+              </span>
+              <span class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg" style="background:rgba(16,185,129,0.1);color:#10b981;">
+                <i data-lucide="trending-up" style="width:11px;height:11px;"></i>
+                Горячий
+              </span>
+            </div>
+          </div>
+
+          <div class="card-float-delay lead-card p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">М</div>
+                <div>
+                  <p class="text-sm font-semibold">Марина Захарова</p>
+                  <p class="text-xs" style="color:rgba(255,255,255,0.4);">@mzakharova · 5 мин назад</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background:rgba(99,102,241,0.15);color:#818cf8;">Тёплый</span>
+            </div>
+            <p class="text-sm mb-3" style="color:rgba(255,255,255,0.7);">«Ищу <span style="color:#FF6B35;font-weight:600;">дизайнера для лендинга</span> под запуск. Уже смотрела несколько, но цены кусаются»</p>
+            <div class="flex items-center gap-2">
+              <span class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);">
+                <i data-lucide="message-circle" style="width:11px;height:11px;"></i>
+                Чат «Стартапы СНГ»
+              </span>
+            </div>
+          </div>
+
+          <div class="card-float-delay2 lead-card p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:linear-gradient(135deg,#10b981,#059669);">С</div>
+                <div>
+                  <p class="text-sm font-semibold">Сергей Николаев</p>
+                  <p class="text-xs" style="color:rgba(255,255,255,0.4);">@sergei_n · 11 мин назад</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background:rgba(16,185,129,0.15);color:#10b981;">Горячий</span>
+            </div>
+            <p class="text-sm mb-3" style="color:rgba(255,255,255,0.7);">«Нужна <span style="color:#FF6B35;font-weight:600;">настройка Яндекс.Директ</span> под e-com. Кто реально умеет — пишите в лс»</p>
+            <div class="flex items-center gap-2">
+              <span class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);">
+                <i data-lucide="message-circle" style="width:11px;height:11px;"></i>
+                Чат «Маркетинг и реклама»
+              </span>
+            </div>
+          </div>
+
+          <!-- Счётчик -->
+          <div class="flex items-center justify-between px-4 py-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">
+            <span class="text-xs" style="color:rgba(255,255,255,0.35);">Найдено сегодня</span>
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="users" style="width:13px;height:13px;color:#FF6B35;"></i>
+              <span class="text-sm font-bold text-white" id="counter">247</span>
+              <span class="text-xs" style="color:rgba(255,255,255,0.35);">лидов</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Скролл-подсказка -->
+    <div class="relative z-10 flex justify-center pb-8">
+      <div class="scroll-hint flex flex-col items-center gap-1" style="color:rgba(255,255,255,0.2);">
+        <span class="text-xs">листайте вниз</span>
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    // Инициализация иконок Lucide
+    lucide.createIcons();
+
+    // Счётчик лидов
+    let count = 247;
+    setInterval(() => {
+      if (Math.random() > 0.6) {
+        count += Math.floor(Math.random() * 3) + 1;
+        const el = document.getElementById('counter');
+        if (el) el.textContent = count;
+      }
+    }, 3500);
+  </script>
+</body>
+</html>
