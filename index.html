@@ -631,12 +631,12 @@
 
     <div class="demo-shell">
       <div class="demo-tabs" role="tablist" aria-label="Экраны демо-интерфейса">
-        <button class="demo-tab is-active" data-demo-tab="0" role="tab" aria-selected="true">Дашборд</button>
-        <button class="demo-tab" data-demo-tab="1" role="tab" aria-selected="false">Список лидов</button>
-        <button class="demo-tab" data-demo-tab="2" role="tab" aria-selected="false">Чат с лидом</button>
+        <button id="demo-tab-0" class="demo-tab is-active" data-demo-tab="0" role="tab" aria-controls="demo-panel-0" aria-selected="true">Дашборд</button>
+        <button id="demo-tab-1" class="demo-tab" data-demo-tab="1" role="tab" aria-controls="demo-panel-1" aria-selected="false">Список лидов</button>
+        <button id="demo-tab-2" class="demo-tab" data-demo-tab="2" role="tab" aria-controls="demo-panel-2" aria-selected="false">Чат с лидом</button>
       </div>
 
-      <div class="demo-screen is-active" data-demo-screen="0">
+      <div id="demo-panel-0" class="demo-screen is-active" data-demo-screen="0" role="tabpanel" aria-labelledby="demo-tab-0">
         <div class="demo-card">
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
             <div>
@@ -665,7 +665,7 @@
         </div>
       </div>
 
-      <div class="demo-screen" data-demo-screen="1">
+      <div id="demo-panel-1" class="demo-screen" data-demo-screen="1" role="tabpanel" aria-labelledby="demo-tab-1" hidden>
         <div class="demo-lead-card">
           <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
             <div>
@@ -699,7 +699,7 @@
         </div>
       </div>
 
-      <div class="demo-screen" data-demo-screen="2">
+      <div id="demo-panel-2" class="demo-screen" data-demo-screen="2" role="tabpanel" aria-labelledby="demo-tab-2" hidden>
         <div class="demo-chat-card">
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
             <div>
@@ -853,8 +853,8 @@
     border-color: rgba(84,184,255,0.45);
     background: rgba(84,184,255,0.12);
   }
-  .demo-screen { display: none; }
-  .demo-screen.is-active { display: block; }
+  .demo-screen { display: none; opacity: 0; transform: translateY(8px); }
+  .demo-screen.is-active { display: block; opacity: 1; transform: translateY(0); transition: opacity 0.25s ease, transform 0.25s ease; }
 
   .demo-card,
   .demo-lead-card,
@@ -985,6 +985,14 @@
   }
   .demo-dot.is-active { background: #54B8FF; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .demo-screen,
+    .demo-screen.is-active {
+      transition: none;
+      transform: none;
+    }
+  }
+
   /* Стрелки */
   .step-arrow {
     display: flex;
@@ -1043,7 +1051,9 @@
     });
 
     demoScreens.forEach((screen, i) => {
-      screen.classList.toggle('is-active', i === index);
+      const active = i === index;
+      screen.classList.toggle('is-active', active);
+      screen.hidden = !active;
     });
 
     demoDots.forEach((dot, i) => {
@@ -1052,11 +1062,19 @@
   }
 
   function startDemoRotation() {
+    if (demoScreens.length === 0) return;
     if (demoInterval) clearInterval(demoInterval);
     demoInterval = setInterval(() => {
       const next = (demoActiveIndex + 1) % demoScreens.length;
       setDemoScreen(next);
     }, 5000);
+  }
+
+  function stopDemoRotation() {
+    if (demoInterval) {
+      clearInterval(demoInterval);
+      demoInterval = null;
+    }
   }
 
   demoTabs.forEach((tab, i) => {
@@ -1072,6 +1090,14 @@
       startDemoRotation();
     });
   });
+
+  const demoShell = document.querySelector('.demo-shell');
+  if (demoShell) {
+    demoShell.addEventListener('mouseenter', stopDemoRotation);
+    demoShell.addEventListener('mouseleave', startDemoRotation);
+    demoShell.addEventListener('focusin', stopDemoRotation);
+    demoShell.addEventListener('focusout', startDemoRotation);
+  }
 
   if (demoScreens.length > 0) {
     setDemoScreen(0);
