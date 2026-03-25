@@ -649,9 +649,9 @@
 
     <div class="demo-shell">
       <div class="demo-tabs" role="tablist" aria-label="Экраны демо-интерфейса">
-        <button id="demo-tab-0" class="demo-tab is-active" data-demo-tab="0" role="tab" aria-controls="demo-panel-0" aria-selected="true">Дашборд</button>
-        <button id="demo-tab-1" class="demo-tab" data-demo-tab="1" role="tab" aria-controls="demo-panel-1" aria-selected="false">Список лидов</button>
-        <button id="demo-tab-2" class="demo-tab" data-demo-tab="2" role="tab" aria-controls="demo-panel-2" aria-selected="false">Чат с лидом</button>
+        <button type="button" id="demo-tab-0" class="demo-tab is-active" data-demo-tab="0" role="tab" aria-controls="demo-panel-0" aria-selected="true">Дашборд</button>
+        <button type="button" id="demo-tab-1" class="demo-tab" data-demo-tab="1" role="tab" aria-controls="demo-panel-1" aria-selected="false">Список лидов</button>
+        <button type="button" id="demo-tab-2" class="demo-tab" data-demo-tab="2" role="tab" aria-controls="demo-panel-2" aria-selected="false">Чат с лидом</button>
       </div>
 
       <div id="demo-panel-0" class="demo-screen is-active" data-demo-screen="0" role="tabpanel" aria-labelledby="demo-tab-0">
@@ -740,9 +740,9 @@
       </div>
 
       <div class="demo-dots" aria-label="Индикаторы экранов">
-        <button class="demo-dot is-active" data-demo-dot="0" aria-label="Показать экран Дашборд"></button>
-        <button class="demo-dot" data-demo-dot="1" aria-label="Показать экран Список лидов"></button>
-        <button class="demo-dot" data-demo-dot="2" aria-label="Показать экран Чат с лидом"></button>
+        <button type="button" class="demo-dot is-active" data-demo-dot="0" aria-label="Показать экран Дашборд"></button>
+        <button type="button" class="demo-dot" data-demo-dot="1" aria-label="Показать экран Список лидов"></button>
+        <button type="button" class="demo-dot" data-demo-dot="2" aria-label="Показать экран Чат с лидом"></button>
       </div>
     </div>
   </div>
@@ -865,6 +865,8 @@
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .demo-tab.is-active {
     color: #fff;
@@ -1000,6 +1002,8 @@
     border: none;
     cursor: pointer;
     background: rgba(255,255,255,0.25);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .demo-dot.is-active { background: #54B8FF; }
 
@@ -1060,22 +1064,23 @@
   let demoInterval = null;
 
   function setDemoScreen(index) {
-    demoActiveIndex = index;
+    if (demoScreens.length === 0) return;
+    demoActiveIndex = ((index % demoScreens.length) + demoScreens.length) % demoScreens.length;
 
     demoTabs.forEach((tab, i) => {
-      const active = i === index;
+      const active = i === demoActiveIndex;
       tab.classList.toggle('is-active', active);
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
     });
 
     demoScreens.forEach((screen, i) => {
-      const active = i === index;
+      const active = i === demoActiveIndex;
       screen.classList.toggle('is-active', active);
       screen.hidden = !active;
     });
 
     demoDots.forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === index);
+      dot.classList.toggle('is-active', i === demoActiveIndex);
     });
   }
 
@@ -1095,26 +1100,29 @@
     }
   }
 
-  demoTabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => {
-      setDemoScreen(i);
+  function bindDemoActivator(node, index) {
+    const activate = (event) => {
+      if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.cancelable) event.preventDefault();
+      setDemoScreen(index);
       startDemoRotation();
-    });
-  });
+    };
+    node.addEventListener('click', activate);
+    node.addEventListener('touchend', activate, { passive: false });
+    node.addEventListener('keydown', activate);
+  }
 
-  demoDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      setDemoScreen(i);
-      startDemoRotation();
-    });
-  });
+  demoTabs.forEach((tab, i) => bindDemoActivator(tab, i));
+  demoDots.forEach((dot, i) => bindDemoActivator(dot, i));
 
   const demoShell = document.querySelector('.demo-shell');
   if (demoShell) {
     demoShell.addEventListener('mouseenter', stopDemoRotation);
     demoShell.addEventListener('mouseleave', startDemoRotation);
     demoShell.addEventListener('focusin', stopDemoRotation);
-    demoShell.addEventListener('focusout', startDemoRotation);
+    demoShell.addEventListener('focusout', () => {
+      if (!demoShell.contains(document.activeElement)) startDemoRotation();
+    });
   }
 
   if (demoScreens.length > 0) {
