@@ -1045,27 +1045,39 @@
     <div class="compare-cards">
       <article class="compare-card">
         <h3>Настройка</h3>
-        <p><span>Ручной:</span> 2-4 часа/день</p>
-        <p><span>Ключевики:</span> 30-60 минут</p>
-        <p class="compare-card-ours"><span>Наш сервис:</span> 4 мин</p>
+        <div class="compare-line"><span>Ручной</span><strong>2-4 часа/день</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>30-60 минут</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>4 мин</strong></div>
       </article>
       <article class="compare-card">
         <h3>Мусор</h3>
-        <p><span>Ручной:</span> 50-70%</p>
-        <p><span>Ключевики:</span> 80-99%</p>
-        <p class="compare-card-ours"><span>Наш сервис:</span> &lt;25%</p>
+        <div class="compare-line"><span>Ручной</span><strong>50-70%</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>80-99%</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>&lt;25%</strong></div>
       </article>
       <article class="compare-card">
         <h3>Время</h3>
-        <p><span>Ручной:</span> 2-4 часа/день</p>
-        <p><span>Ключевики:</span> 30-60 мин/день</p>
-        <p class="compare-card-ours"><span>Наш сервис:</span> 0 мин/день</p>
+        <div class="compare-line"><span>Ручной</span><strong>2-4 часа/день</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>30-60 мин/день</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>0 мин/день</strong></div>
       </article>
       <article class="compare-card">
-        <h3>CRM / Площадки / CPL</h3>
-        <p><span>Ручной:</span> нет CRM, 1-2 площадки, CPL высокий</p>
-        <p><span>Ключевики:</span> редко CRM, 1-3 площадки, CPL нестабилен</p>
-        <p class="compare-card-ours"><span>Наш сервис:</span> CRM да, 16+, CPL 150-240₽</p>
+        <h3>CRM</h3>
+        <div class="compare-line"><span>Ручной</span><strong>Нет</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>Редко</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>Да</strong></div>
+      </article>
+      <article class="compare-card">
+        <h3>Площадки</h3>
+        <div class="compare-line"><span>Ручной</span><strong>1-2</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>1-3</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>16+</strong></div>
+      </article>
+      <article class="compare-card">
+        <h3>CPL</h3>
+        <div class="compare-line"><span>Ручной</span><strong>Высокий</strong></div>
+        <div class="compare-line"><span>Ключевики</span><strong>Нестабильный</strong></div>
+        <div class="compare-line compare-line-ours"><span>Наш сервис</span><strong>150-240₽</strong></div>
       </article>
     </div>
   </div>
@@ -1645,24 +1657,35 @@
     font-weight: 800;
     margin-bottom: 8px;
   }
-  .compare-card p {
+  .compare-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
     color: #6b7280;
     font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 6px;
+    line-height: 1.4;
   }
-  .compare-card p span {
-    font-weight: 800;
-    color: #374151;
+  .compare-line span {
+    font-weight: 700;
+    color: #4b5563;
   }
-  .compare-card-ours {
-    margin-top: 8px;
+  .compare-line strong {
+    color: #111827;
+    font-weight: 700;
+  }
+  .compare-line-ours {
     border-radius: 10px;
     padding: 8px 10px;
     background: rgba(255,107,53,0.12);
     border: 1px solid rgba(255,107,53,0.28);
-    color: #9a3412 !important;
-    font-weight: 700;
+    margin-top: 8px;
+  }
+  .compare-line-ours span,
+  .compare-line-ours strong {
+    color: #9a3412;
+    font-weight: 800;
   }
 
   @media (prefers-reduced-motion: reduce) {
