@@ -604,6 +604,132 @@
   </div>
 </section>
 
+
+<!-- ═══════════════════════════════════════
+     БЛОК 3 — ДЕМО ИНТЕРФЕЙСА
+════════════════════════════════════════ -->
+<section id="demo" style="background:#F7F7FA;padding:0 20px 88px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
+        Вот как выглядят ваши будущие клиенты
+      </h2>
+    </div>
+
+    <div class="platform-strip" aria-label="Площадки мониторинга">
+      <span class="demo-platform-badge">Telegram</span>
+      <span class="demo-platform-badge">HH.ru</span>
+      <span class="demo-platform-badge">SuperJob</span>
+      <span class="demo-platform-badge">Habr Career</span>
+      <span class="demo-platform-badge">FL.ru</span>
+      <span class="demo-platform-badge">Kwork</span>
+      <span class="demo-platform-badge">LinkedIn</span>
+      <span class="demo-platform-badge">Reddit</span>
+      <span class="demo-platform-badge">Hacker News</span>
+      <span class="demo-platform-badge">Remote OK</span>
+    </div>
+
+    <div class="demo-shell">
+      <div class="demo-tabs" role="tablist" aria-label="Экраны демо-интерфейса">
+        <button class="demo-tab is-active" data-demo-tab="0" role="tab" aria-selected="true">Дашборд</button>
+        <button class="demo-tab" data-demo-tab="1" role="tab" aria-selected="false">Список лидов</button>
+        <button class="demo-tab" data-demo-tab="2" role="tab" aria-selected="false">Чат с лидом</button>
+      </div>
+
+      <div class="demo-screen is-active" data-demo-screen="0">
+        <div class="demo-card">
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+            <div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.58);margin-bottom:3px;">Статистика лидов</p>
+              <p style="font-size:18px;font-weight:800;">За последние 30 дней</p>
+            </div>
+            <button class="demo-btn demo-btn-blue">Экспорт CSV</button>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+            <span class="demo-chip">Статус: GOOD</span>
+            <span class="demo-chip">Оценка: 9-10</span>
+          </div>
+
+          <svg viewBox="0 0 520 160" class="demo-chart" aria-label="Линейный график статистики лидов">
+            <polyline points="0,130 58,120 116,122 174,98 232,104 290,82 348,90 406,62 464,68 520,38" fill="none" stroke="#54B8FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+            <polyline points="0,145 58,138 116,136 174,124 232,130 290,112 348,116 406,98 464,102 520,82" fill="none" stroke="rgba(84,184,255,0.35)" stroke-width="2" stroke-dasharray="5 7"></polyline>
+          </svg>
+
+          <div class="demo-metrics">
+            <div class="demo-metric"><span>Total Leads</span><strong>97</strong></div>
+            <div class="demo-metric"><span>Good Leads</span><strong>12</strong></div>
+            <div class="demo-metric"><span>Average Score</span><strong>9.3</strong></div>
+            <div class="demo-metric"><span>New Today</span><strong>3</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-screen" data-demo-screen="1">
+        <div class="demo-lead-card">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
+            <div>
+              <p style="font-size:15px;font-weight:700;">Алексей Смирнов</p>
+              <span class="demo-source-badge">Telegram</span>
+            </div>
+            <span class="demo-score">9/10</span>
+          </div>
+          <p class="demo-lead-text">Ищу специалиста по внедрению AI-агентов в CRM.</p>
+          <p class="demo-phone">+7 (916) 555-12-10</p>
+          <div style="display:flex;gap:8px;">
+            <button class="demo-btn demo-btn-blue">Open Chat</button>
+            <button class="demo-btn demo-btn-green">good</button>
+          </div>
+        </div>
+
+        <div class="demo-lead-card">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
+            <div>
+              <p style="font-size:15px;font-weight:700;">Марина Горшкова</p>
+              <span class="demo-source-badge">Habr Career</span>
+            </div>
+            <span class="demo-score">9/10</span>
+          </div>
+          <p class="demo-lead-text">Есть интеграторы Битрикс24? Нужен подрядчик под проект на 2 месяца.</p>
+          <p class="demo-phone">+7 (903) 778-43-21</p>
+          <div style="display:flex;gap:8px;">
+            <button class="demo-btn demo-btn-blue">Open Chat</button>
+            <button class="demo-btn demo-btn-green">good</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-screen" data-demo-screen="2">
+        <div class="demo-chat-card">
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+            <div>
+              <p style="font-size:15px;font-weight:800;">Алексей Смирнов · Telegram</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.6);">Скоринг <span style="color:#22c55e;font-weight:700;">9/10</span></p>
+            </div>
+            <a href="#register" class="demo-link">Open in Telegram</a>
+          </div>
+
+          <div class="demo-bubble">
+            Добрый день! Нужен исполнитель, который внедрит AI-агентов в CRM и настроит сценарии квалификации лидов.
+          </div>
+
+          <button class="demo-btn demo-btn-blue" style="margin:14px 0 12px;">AI Suggest Response</button>
+
+          <div class="demo-input">
+            Здравствуйте! Можем показать внедрение на похожем кейсе и запустить пилот за 7 дней...
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-dots" aria-label="Индикаторы экранов">
+        <button class="demo-dot is-active" data-demo-dot="0" aria-label="Показать экран Дашборд"></button>
+        <button class="demo-dot" data-demo-dot="1" aria-label="Показать экран Список лидов"></button>
+        <button class="demo-dot" data-demo-dot="2" aria-label="Показать экран Чат с лидом"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Адаптивные стили -->
 <style>
   @media (min-width: 768px) {
@@ -679,6 +805,186 @@
     font-weight: 600;
   }
 
+  /* ── Блок "Демо интерфейса" ── */
+  .platform-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 0 10px;
+    margin-bottom: 16px;
+    scrollbar-width: thin;
+  }
+  .demo-platform-badge {
+    flex: 0 0 auto;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .demo-shell {
+    background: #0F0F1A;
+    border-radius: 22px;
+    padding: 16px;
+    box-shadow: 0 20px 45px rgba(10,10,16,0.25);
+  }
+  .demo-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .demo-tab {
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.58);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .demo-tab.is-active {
+    color: #fff;
+    border-color: rgba(84,184,255,0.45);
+    background: rgba(84,184,255,0.12);
+  }
+  .demo-screen { display: none; }
+  .demo-screen.is-active { display: block; }
+
+  .demo-card,
+  .demo-lead-card,
+  .demo-chat-card {
+    border-radius: 16px;
+    background: #131324;
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.33);
+    padding: 14px;
+    color: #fff;
+  }
+  .demo-chart {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(180deg,rgba(84,184,255,0.06),transparent);
+    border: 1px solid rgba(84,184,255,0.2);
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .demo-chip {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.72);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+  }
+  .demo-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px;
+  }
+  .demo-metric {
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px;
+  }
+  .demo-metric span {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.56);
+    margin-bottom: 5px;
+  }
+  .demo-metric strong { font-size: 18px; }
+
+  .demo-lead-card { margin-bottom: 10px; }
+  .demo-source-badge {
+    display: inline-flex;
+    margin-top: 6px;
+    background: rgba(34,197,94,0.14);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.32);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .demo-score {
+    color: #22c55e;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 999px;
+    border: 1px solid rgba(34,197,94,0.35);
+    padding: 5px 9px;
+  }
+  .demo-lead-text {
+    margin: 10px 0 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.76);
+  }
+  .demo-phone {
+    font-size: 12px;
+    color: rgba(255,255,255,0.56);
+    margin-bottom: 10px;
+  }
+
+  .demo-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+  }
+  .demo-btn-blue { background: #38bdf8; }
+  .demo-btn-green { background: #22c55e; }
+
+  .demo-link {
+    color: #54B8FF;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .demo-bubble {
+    border-radius: 12px 12px 12px 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    padding: 11px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.86);
+  }
+  .demo-input {
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(15,15,26,0.95);
+    color: rgba(255,255,255,0.58);
+    font-size: 12px;
+    padding: 10px;
+  }
+  .demo-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .demo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.25);
+  }
+  .demo-dot.is-active { background: #54B8FF; }
+
   /* Стрелки */
   .step-arrow {
     display: flex;
@@ -690,6 +996,10 @@
   .arrow-icon-v { display: block; }
 
   @media (min-width: 900px) {
+    .demo-shell { padding: 20px; }
+    .demo-metrics {
+      grid-template-columns: repeat(4, minmax(0,1fr));
+    }
     .how-steps {
       flex-direction: row;
       align-items: stretch;
@@ -715,6 +1025,58 @@
       if (el) el.textContent = count.toLocaleString('ru-RU');
     }
   }, 3200);
+
+  // Демо-интерфейс: автопереключение экранов каждые 5 секунд
+  const demoTabs = Array.from(document.querySelectorAll('[data-demo-tab]'));
+  const demoScreens = Array.from(document.querySelectorAll('[data-demo-screen]'));
+  const demoDots = Array.from(document.querySelectorAll('[data-demo-dot]'));
+  let demoActiveIndex = 0;
+  let demoInterval = null;
+
+  function setDemoScreen(index) {
+    demoActiveIndex = index;
+
+    demoTabs.forEach((tab, i) => {
+      const active = i === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    demoScreens.forEach((screen, i) => {
+      screen.classList.toggle('is-active', i === index);
+    });
+
+    demoDots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+    });
+  }
+
+  function startDemoRotation() {
+    if (demoInterval) clearInterval(demoInterval);
+    demoInterval = setInterval(() => {
+      const next = (demoActiveIndex + 1) % demoScreens.length;
+      setDemoScreen(next);
+    }, 5000);
+  }
+
+  demoTabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      setDemoScreen(i);
+      startDemoRotation();
+    });
+  });
+
+  demoDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      setDemoScreen(i);
+      startDemoRotation();
+    });
+  });
+
+  if (demoScreens.length > 0) {
+    setDemoScreen(0);
+    startDemoRotation();
+  }
 </script>
 
 <!-- Lucide в самом конце body — гарантирует загрузку после DOM -->
