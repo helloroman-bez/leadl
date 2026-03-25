@@ -748,6 +748,72 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     БЛОК 4 — ПРЕИМУЩЕСТВА
+════════════════════════════════════════ -->
+<section id="benefits" style="background:#F7F7FA;padding:0 20px 88px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:34px;">
+      <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
+        Почему это работает лучше, чем вы привыкли
+      </h2>
+    </div>
+
+    <div class="benefits-grid">
+      <article class="benefit-card">
+        <div class="benefit-icon">
+          <i data-lucide="brain-circuit" style="width:18px;height:18px;color:#FF6B35;"></i>
+        </div>
+        <h3 class="benefit-title">AI вместо ключевых слов</h3>
+        <p class="benefit-text">
+          5-ступенчатая AI-воронка по 16+ площадкам понимает контекст запроса и отсеивает шум.
+        </p>
+        <p class="benefit-highlight"><span>76%</span> меньше мусора</p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-icon">
+          <i data-lucide="timer-reset" style="width:18px;height:18px;color:#FF6B35;"></i>
+        </div>
+        <h3 class="benefit-title">4 минуты до первых лидов</h3>
+        <p class="benefit-text">
+          Вы описываете бизнес и задачу — система сама формирует запросы и запускает сбор.
+        </p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-icon">
+          <i data-lucide="network" style="width:18px;height:18px;color:#FF6B35;"></i>
+        </div>
+        <h3 class="benefit-title">16+ площадок одновременно</h3>
+        <p class="benefit-text">
+          Telegram, HH.ru, LinkedIn, Reddit, фриланс-биржи и другие источники в одном окне.
+        </p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-icon">
+          <i data-lucide="workflow" style="width:18px;height:18px;color:#FF6B35;"></i>
+        </div>
+        <h3 class="benefit-title">Интеграции с CRM</h3>
+        <p class="benefit-text">
+          AmoCRM, Bitrix24, HubSpot — лиды автоматически попадают в воронку продаж.
+        </p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-icon">
+          <i data-lucide="line-chart" style="width:18px;height:18px;color:#FF6B35;"></i>
+        </div>
+        <h3 class="benefit-title">Прогноз ROI до оплаты</h3>
+        <p class="benefit-text">
+          До старта видите ориентир по объёму лидов, продажам и потенциальной выручке.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- Адаптивные стили -->
 <style>
   @media (min-width: 768px) {
@@ -1008,6 +1074,56 @@
   }
   .demo-dot.is-active { background: #54B8FF; }
 
+  /* ── Блок "Преимущества" ── */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .benefit-card {
+    background: #fff;
+    border: 1px solid #ececf2;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+  }
+  .benefit-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,107,53,0.2);
+    background: rgba(255,107,53,0.08);
+    margin-bottom: 12px;
+  }
+  .benefit-title {
+    color: #111827;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .benefit-text {
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .benefit-highlight {
+    margin-top: 12px;
+    color: #fb923c;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .benefit-highlight span {
+    color: #FF6B35;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+    margin-right: 6px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .demo-screen,
     .demo-screen.is-active {
@@ -1027,6 +1143,12 @@
   .arrow-icon-v { display: block; }
 
   @media (min-width: 900px) {
+    .benefits-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    .benefit-card:first-child {
+      grid-column: span 2;
+    }
     .demo-shell { padding: 20px; }
     .demo-metrics {
       grid-template-columns: repeat(4, minmax(0,1fr));
