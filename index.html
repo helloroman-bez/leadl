@@ -683,7 +683,7 @@
         </div>
       </div>
 
-      <div id="demo-panel-1" class="demo-screen" data-demo-screen="1" role="tabpanel" aria-labelledby="demo-tab-1" hidden>
+      <div id="demo-panel-1" class="demo-screen" data-demo-screen="1" role="tabpanel" aria-labelledby="demo-tab-1">
         <div class="demo-lead-card">
           <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
             <div>
@@ -717,7 +717,7 @@
         </div>
       </div>
 
-      <div id="demo-panel-2" class="demo-screen" data-demo-screen="2" role="tabpanel" aria-labelledby="demo-tab-2" hidden>
+      <div id="demo-panel-2" class="demo-screen" data-demo-screen="2" role="tabpanel" aria-labelledby="demo-tab-2">
         <div class="demo-chat-card">
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
             <div>
@@ -873,8 +873,9 @@
     border-color: rgba(84,184,255,0.45);
     background: rgba(84,184,255,0.12);
   }
-  .demo-screen { display: none; opacity: 0; transform: translateY(8px); }
-  .demo-screen.is-active { display: block; opacity: 1; transform: translateY(0); transition: opacity 0.25s ease, transform 0.25s ease; }
+  .demo-screen { opacity: 1; transform: none; margin-bottom: 10px; }
+  .js-demo .demo-screen { display: none; opacity: 0; transform: translateY(8px); margin-bottom: 0; }
+  .js-demo .demo-screen.is-active { display: block; opacity: 1; transform: translateY(0); transition: opacity 0.25s ease, transform 0.25s ease; }
 
   .demo-card,
   .demo-lead-card,
@@ -1057,6 +1058,7 @@
   }, 3200);
 
   // Демо-интерфейс: автопереключение экранов каждые 5 секунд
+  document.body.classList.add('js-demo');
   const demoTabs = Array.from(document.querySelectorAll('[data-demo-tab]'));
   const demoScreens = Array.from(document.querySelectorAll('[data-demo-screen]'));
   const demoDots = Array.from(document.querySelectorAll('[data-demo-dot]'));
@@ -1103,12 +1105,11 @@
   function bindDemoActivator(node, index) {
     const activate = (event) => {
       if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return;
-      if (event.cancelable) event.preventDefault();
       setDemoScreen(index);
       startDemoRotation();
     };
     node.addEventListener('click', activate);
-    node.addEventListener('touchend', activate, { passive: false });
+    node.addEventListener('pointerup', activate);
     node.addEventListener('keydown', activate);
   }
 
