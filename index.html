@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -707,9 +706,7 @@
 </style>
 
 <script>
-  lucide.createIcons();
-
-  // Живой счётчик
+  // Живой счётчик — не зависит от Lucide
   let count = 1847;
   const el = document.getElementById('counter');
   setInterval(() => {
@@ -718,6 +715,16 @@
       if (el) el.textContent = count.toLocaleString('ru-RU');
     }
   }, 3200);
+</script>
+
+<!-- Lucide в самом конце body — гарантирует загрузку после DOM -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"
+        onerror="console.warn('Lucide primary CDN failed, trying fallback');
+                 var s=document.createElement('script');
+                 s.src='https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js';
+                 s.onload=function(){lucide.createIcons();};
+                 document.body.appendChild(s);"
+        onload="lucide.createIcons();">
 </script>
 </body>
 </html>
