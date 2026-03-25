@@ -5,32 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeadL — AI-лидогенерация с 16+ площадок</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            accent: '#FF6B35',
-            dark:   '#0A0A0F',
-          },
-          fontFamily: {
-            sans: ['Manrope', 'sans-serif'],
-          },
-        },
-      },
-    }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
-    body { font-family: 'Manrope', sans-serif; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: #0A0A0F;
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      overflow-x: hidden;
+      min-height: 100%;
+    }
 
-    /* Текстовые градиенты */
+    /* ── Сетка фона ── */
+    .grid-bg {
+      background-color: #0A0A0F;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 52px 52px;
+    }
+
+    /* ── Текст ── */
+    .text-white-dim  { color: rgba(255,255,255,0.55); }
+    .text-white-med  { color: rgba(255,255,255,0.8); }
+    .text-white-faint{ color: rgba(255,255,255,0.35); }
+
     .gradient-text {
-      background: linear-gradient(150deg, #ffffff 0%, #9090a8 100%);
+      background: linear-gradient(150deg, #fff 0%, #909099 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -42,421 +47,404 @@
       background-clip: text;
     }
 
-    /* Кнопка */
+    /* ── Кнопка ── */
     .glow-btn {
-      box-shadow: 0 0 28px rgba(255,107,53,0.45);
-      transition: box-shadow 0.2s ease, transform 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #FF6B35 0%, #e04d15 100%);
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 32px rgba(255,107,53,0.45);
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    @media (min-width: 640px) {
+      .glow-btn { width: auto; }
     }
     .glow-btn:hover {
-      box-shadow: 0 0 48px rgba(255,107,53,0.65);
+      box-shadow: 0 0 52px rgba(255,107,53,0.65);
       transform: translateY(-2px);
     }
-    .glow-btn:active { transform: translateY(0); }
 
-    /* Пульсация */
+    /* ── Пульс ── */
     .dot-pulse { animation: dpulse 2s ease-in-out infinite; }
-    @keyframes dpulse {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.3; }
-    }
+    @keyframes dpulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
-    /* Сетка фона */
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
-      background-size: 52px 52px;
-    }
+    /* ── Float ── */
+    .f0 { animation: cf 5s ease-in-out infinite; }
+    .f1 { animation: cf 5s ease-in-out 1.5s infinite; }
+    .f2 { animation: cf 5s ease-in-out 3s   infinite; }
+    @keyframes cf { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 
-    /* Карточки — лёгкий float */
-    .card-float        { animation: cfloat 5s ease-in-out infinite; }
-    .card-float-d1     { animation: cfloat 5s ease-in-out 1.4s infinite; }
-    .card-float-d2     { animation: cfloat 5s ease-in-out 2.8s infinite; }
-    @keyframes cfloat {
-      0%,100% { transform: translateY(0); }
-      50%     { transform: translateY(-7px); }
-    }
-
-    /* Лид-карточка */
+    /* ── Лид-карточка ── */
     .lead-card {
-      background: rgba(255,255,255,0.045);
+      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.09);
       border-radius: 14px;
-      transition: border-color 0.25s, background 0.25s;
+      padding: 16px;
+      transition: border-color 0.2s;
     }
-    .lead-card:hover {
-      border-color: rgba(255,107,53,0.35);
-      background: rgba(255,255,255,0.07);
-    }
+    .lead-card:hover { border-color: rgba(255,107,53,0.35); }
 
-    /* Бейдж площадки */
-    .platform-badge {
+    /* ── Бейдж ── */
+    .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       padding: 2px 8px;
       border-radius: 6px;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
     }
+    .badge-tg   { background: rgba(41,182,246,0.15); color: #29b6f6; }
+    .badge-hh   { background: rgba(239,68,68,0.15);  color: #f87171; }
+    .badge-li   { background: rgba(14,165,233,0.15); color: #38bdf8; }
+    .badge-hot  { background: rgba(34,197,94,0.12);  color: #22c55e; }
+    .badge-warm { background: rgba(139,92,246,0.15); color: #a78bfa; }
+    .badge-new  { background: rgba(255,107,53,0.15); color: #FF6B35; }
 
-    /* Полоска площадок */
-    .platforms-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .platform-pill {
+    /* ── Пилюля площадки ── */
+    .pill {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.65);
+      color: rgba(255,255,255,0.6);
       white-space: nowrap;
     }
-    .platform-pill.active {
+    .pill-active {
       background: rgba(255,107,53,0.12);
-      border-color: rgba(255,107,53,0.35);
+      border-color: rgba(255,107,53,0.38);
       color: #FF6B35;
     }
 
-    /* Разделитель метрик */
-    .stat-divider { width: 1px; background: rgba(255,255,255,0.1); height: 28px; }
-
-    /* Скролл-подсказка */
-    .scroll-hint { animation: sbounce 2.2s ease-in-out infinite; }
-    @keyframes sbounce {
-      0%,100% { transform: translateY(0); }
-      50%     { transform: translateY(7px); }
+    /* ── Действие в карточке ── */
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255,107,53,0.15);
+      color: #FF6B35;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
     }
+    .card-action:hover { background: rgba(255,107,53,0.3); }
 
-    /* Новый лид — появление */
-    @keyframes slideIn {
-      from { opacity:0; transform: translateX(12px); }
-      to   { opacity:1; transform: translateX(0); }
+    /* ── Скролл ── */
+    .scroll-hint { animation: sb 2.2s ease-in-out infinite; }
+    @keyframes sb { 0%,100%{transform:translateY(0)} 50%{transform:translateY(7px)} }
+
+    /* ── Разделитель метрик ── */
+    .vline { width:1px; height:28px; background: rgba(255,255,255,0.1); flex-shrink:0; }
+
+    /* ── Аватар ── */
+    .avatar {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      flex-shrink: 0;
     }
-    .slide-in { animation: slideIn 0.4s ease forwards; }
   </style>
 </head>
-<body class="bg-dark text-white overflow-x-hidden">
+<body>
 
-<!-- ═══════════════════════════════════════
-     HERO
-════════════════════════════════════════ -->
-<section class="relative min-h-screen flex flex-col grid-bg">
+<section class="grid-bg" style="min-height:100svh; display:flex; flex-direction:column; position:relative;">
 
-  <!-- Свечения фона -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div style="position:absolute;top:-80px;left:-80px;width:640px;height:640px;
-                background:radial-gradient(circle, rgba(255,107,53,0.13) 0%, transparent 68%);
-                border-radius:50%;"></div>
-    <div style="position:absolute;bottom:-60px;right:5%;width:480px;height:480px;
-                background:radial-gradient(circle, rgba(99,102,241,0.09) 0%, transparent 70%);
-                border-radius:50%;"></div>
-    <!-- Тонкая горизонтальная линия-акцент -->
+  <!-- Свечения -->
+  <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <div style="position:absolute;top:-80px;left:-80px;width:560px;height:560px;
+                background:radial-gradient(circle,rgba(255,107,53,0.13) 0%,transparent 68%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-60px;right:0;width:420px;height:420px;
+                background:radial-gradient(circle,rgba(99,102,241,0.09) 0%,transparent 70%);border-radius:50%;"></div>
     <div style="position:absolute;top:0;left:0;right:0;height:1px;
-                background:linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.4) 40%, rgba(255,107,53,0.4) 60%, transparent 100%);"></div>
+                background:linear-gradient(90deg,transparent,rgba(255,107,53,0.5) 40%,rgba(255,107,53,0.5) 60%,transparent);"></div>
   </div>
 
-  <!-- ── Навбар ── -->
-  <nav class="relative z-10 flex items-center justify-between px-5 py-5 max-w-7xl mx-auto w-full">
+  <!-- ── НАВБАР ── -->
+  <nav style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;
+              padding:18px 20px;max-width:1200px;margin:0 auto;width:100%;">
     <!-- Лого -->
-    <div class="flex items-center gap-2">
-      <div style="width:30px;height:30px;background:linear-gradient(135deg,#FF6B35,#e8480e);
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:30px;height:30px;min-width:30px;background:linear-gradient(135deg,#FF6B35,#e04d15);
                   border-radius:7px;display:flex;align-items:center;justify-content:center;">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M2 8l4 4 8-8" stroke="white" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 8l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span class="font-extrabold text-lg tracking-tight">LeadL</span>
+      <span style="font-weight:800;font-size:18px;letter-spacing:-0.3px;">LeadL</span>
     </div>
 
-    <!-- Меню -->
-    <div class="hidden md:flex items-center gap-8 text-sm" style="color:rgba(255,255,255,0.55);">
-      <a href="#how" class="hover:text-white transition-colors">Как работает</a>
-      <a href="#platforms" class="hover:text-white transition-colors">Площадки</a>
-      <a href="#pricing" class="hover:text-white transition-colors">Тарифы</a>
-      <a href="#cases" class="hover:text-white transition-colors">Кейсы</a>
+    <!-- Меню — только десктоп -->
+    <div style="display:none;" class="nav-links">
+      <a href="#how"       style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Как работает</a>
+      <a href="#platforms" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Площадки</a>
+      <a href="#pricing"   style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Тарифы</a>
+      <a href="#cases"     style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Кейсы</a>
     </div>
 
-    <!-- Вход -->
-    <a href="#register"
-       class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
-       style="border:1px solid rgba(255,255,255,0.13);color:rgba(255,255,255,0.75);"
-       onmouseover="this.style.borderColor='rgba(255,107,53,0.5)';this.style.color='#fff'"
-       onmouseout="this.style.borderColor='rgba(255,255,255,0.13)';this.style.color='rgba(255,255,255,0.75)'">
+    <a href="#register" style="display:none;padding:8px 16px;border-radius:10px;
+       border:1px solid rgba(255,255,255,0.13);color:rgba(255,255,255,0.75);
+       font-size:14px;font-weight:600;text-decoration:none;" class="nav-login">
       Войти
     </a>
   </nav>
 
-  <!-- ── Основной блок ── -->
-  <div class="relative z-10 flex-1 flex items-center px-5 py-10 max-w-7xl mx-auto w-full">
-    <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-14 w-full">
+  <!-- ── КОНТЕНТ ── -->
+  <div style="position:relative;z-index:10;flex:1;display:flex;align-items:center;
+              padding:24px 20px 32px;max-width:1200px;margin:0 auto;width:100%;">
 
-      <!-- ────────────────────────────────
-           Левая колонка — текст + CTA
-      ──────────────────────────────── -->
-      <div class="flex-1 flex flex-col items-start w-full max-w-2xl">
+    <div style="display:flex;flex-direction:column;align-items:stretch;gap:40px;width:100%;" class="hero-layout">
+
+      <!-- ═══ Левая колонка ═══ -->
+      <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%;">
 
         <!-- Статус-бейдж -->
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
-             style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.28);">
-          <span class="dot-pulse w-1.5 h-1.5 rounded-full inline-block" style="background:#FF6B35;"></span>
-          <span class="text-xs font-bold tracking-widest uppercase" style="color:#FF6B35;">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+                    background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);margin-bottom:20px;">
+          <span class="dot-pulse" style="width:7px;height:7px;border-radius:50%;background:#FF6B35;display:inline-block;flex-shrink:0;"></span>
+          <span style="font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6B35;">
             AI мониторит 16 площадок прямо сейчас
           </span>
         </div>
 
         <!-- H1 -->
-        <h1 class="text-[38px] sm:text-5xl lg:text-[54px] font-extrabold leading-[1.08] tracking-tight mb-5">
-          <span class="gradient-text">Клиенты ищут вас прямо<br/>сейчас на 16+&nbsp;площадках.</span><br/>
+        <h1 style="font-size:clamp(32px,7vw,54px);font-weight:800;line-height:1.08;
+                   letter-spacing:-0.5px;margin-bottom:18px;">
+          <span class="gradient-text">Клиенты ищут вас прямо сейчас<br>на&nbsp;16+&nbsp;площадках.</span><br>
           <span class="accent-text">Мы их находим.</span>
         </h1>
 
         <!-- Подзаголовок -->
-        <p class="text-base sm:text-[17px] leading-relaxed mb-2" style="color:rgba(255,255,255,0.52);">
-          AI мониторит Telegram, HH.ru, SuperJob, LinkedIn, Reddit, фриланс-биржи
-          24/7 и присылает контакты людей, которым нужны ваши услуги.
+        <p style="font-size:15px;line-height:1.65;color:rgba(255,255,255,0.52);margin-bottom:6px;">
+          AI мониторит Telegram, HH.ru, SuperJob, LinkedIn, Reddit,
+          фриланс-биржи 24/7 и присылает контакты людей, которым нужны ваши услуги.
         </p>
-        <p class="text-base sm:text-[17px] font-semibold mb-8" style="color:rgba(255,255,255,0.82);">
+        <p style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:24px;">
           Настройка — 4 минуты.
         </p>
 
-        <!-- Площадки — пилюли -->
-        <div class="platforms-row mb-8">
-          <span class="platform-pill active">
+        <!-- Площадки-пилюли -->
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;">
+          <span class="pill pill-active">
             <i data-lucide="send" style="width:11px;height:11px;"></i> Telegram
           </span>
-          <span class="platform-pill">HH.ru</span>
-          <span class="platform-pill">SuperJob</span>
-          <span class="platform-pill">
-            <i data-lucide="linkedin" style="width:11px;height:11px;"></i> LinkedIn
-          </span>
-          <span class="platform-pill">Reddit</span>
-          <span class="platform-pill">FL.ru</span>
-          <span class="platform-pill">Kwork</span>
-          <span class="platform-pill" style="color:rgba(255,255,255,0.35);border-color:rgba(255,255,255,0.06);">
-            +9 ещё
-          </span>
+          <span class="pill">HH.ru</span>
+          <span class="pill">SuperJob</span>
+          <span class="pill">LinkedIn</span>
+          <span class="pill">Reddit</span>
+          <span class="pill">FL.ru</span>
+          <span class="pill">Kwork</span>
+          <span class="pill" style="color:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.06);">+9 ещё</span>
         </div>
 
         <!-- CTA -->
-        <div class="flex flex-col w-full sm:w-auto gap-4">
-          <a href="#register"
-             class="glow-btn w-full sm:w-auto inline-flex items-center justify-center gap-2.5
-                    px-8 py-4 rounded-xl font-bold text-[15px] text-white"
-             style="background:linear-gradient(135deg,#FF6B35 0%,#e04d15 100%);">
-            Получить первых лидов бесплатно
-            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
-          </a>
+        <a href="#register" class="glow-btn" style="margin-bottom:20px;">
+          Получить первых лидов бесплатно
+          <i data-lucide="arrow-right" style="width:18px;height:18px;flex-shrink:0;"></i>
+        </a>
 
-          <!-- Три метрики -->
-          <div class="flex items-center gap-4 flex-wrap">
-            <div class="flex flex-col">
-              <span class="text-sm font-bold" style="color:rgba(255,255,255,0.9);">160+</span>
-              <span class="text-[11px]" style="color:rgba(255,255,255,0.38);">компаний</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="flex flex-col">
-              <span class="text-sm font-bold" style="color:rgba(255,255,255,0.9);">16</span>
-              <span class="text-[11px]" style="color:rgba(255,255,255,0.38);">площадок</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="flex flex-col">
-              <span class="text-sm font-bold" style="color:rgba(255,255,255,0.9);">4 мин</span>
-              <span class="text-[11px]" style="color:rgba(255,255,255,0.38);">настройки</span>
-            </div>
-            <div class="stat-divider hidden sm:block"></div>
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-xs"
-                  style="color:rgba(255,255,255,0.35);">
-              <i data-lucide="credit-card" style="width:12px;height:12px;"></i>
-              Карта не нужна
-            </span>
+        <!-- Метрики -->
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;">
+            <span style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.9);">160+</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.38);">компаний</span>
           </div>
+          <div class="vline"></div>
+          <div style="display:flex;flex-direction:column;">
+            <span style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.9);">16</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.38);">площадок</span>
+          </div>
+          <div class="vline"></div>
+          <div style="display:flex;flex-direction:column;">
+            <span style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.9);">4 мин</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.38);">настройки</span>
+          </div>
+          <div class="vline"></div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.35);">
+            <i data-lucide="credit-card" style="width:12px;height:12px;flex-shrink:0;"></i>
+            Карта не нужна
+          </span>
         </div>
 
-      </div><!-- /левая колонка -->
+      </div><!-- /левая -->
 
-      <!-- ────────────────────────────────
-           Правая колонка — UI-панель
-      ──────────────────────────────── -->
-      <div class="flex-shrink-0 w-full max-w-[360px] lg:max-w-[400px] flex flex-col gap-3 select-none">
+      <!-- ═══ Правая колонка — UI-панель ═══ -->
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;" class="ui-panel">
 
         <!-- Шапка панели -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-2xl"
-             style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
-          <div class="flex items-center gap-2.5">
-            <i data-lucide="bot" style="width:15px;height:15px;color:#FF6B35;"></i>
-            <span class="text-sm font-bold">Входящие лиды</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;
+                    padding:12px 16px;border-radius:14px;
+                    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i data-lucide="bot" style="width:15px;height:15px;color:#FF6B35;flex-shrink:0;"></i>
+            <span style="font-size:13px;font-weight:700;">Входящие лиды</span>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="dot-pulse w-1.5 h-1.5 rounded-full inline-block"
-                  style="background:#22c55e;"></span>
-            <span class="text-xs" style="color:rgba(255,255,255,0.38);">сканирование…</span>
+          <div style="display:flex;align-items:center;gap:7px;">
+            <span class="dot-pulse" style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;flex-shrink:0;"></span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.38);">сканирование…</span>
           </div>
         </div>
 
-        <!-- Карточка 1 — Telegram, горячий -->
-        <div class="lead-card p-4 card-float">
-          <div class="flex items-start justify-between mb-2.5">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
-                   style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">А</div>
-              <div>
-                <p class="text-sm font-semibold leading-tight">Алексей Ковалёв</p>
-                <p class="text-[11px]" style="color:rgba(255,255,255,0.38);">@alex_dev · 2 мин назад</p>
+        <!-- Карточка 1 — Telegram -->
+        <div class="lead-card f0">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+              <div class="avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">А</div>
+              <div style="min-width:0;">
+                <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Алексей Ковалёв</p>
+                <p style="font-size:11px;color:rgba(255,255,255,0.38);">@alex_dev · 2 мин назад</p>
               </div>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="platform-badge" style="background:rgba(41,182,246,0.15);color:#29b6f6;">
-                <i data-lucide="send" style="width:10px;height:10px;"></i> Telegram
-              </span>
-              <span class="platform-badge" style="background:rgba(34,197,94,0.12);color:#22c55e;">
-                Горячий
-              </span>
+            <div style="display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+              <span class="badge badge-tg"><i data-lucide="send" style="width:9px;height:9px;"></i> Telegram</span>
+              <span class="badge badge-hot">Горячий</span>
             </div>
           </div>
-          <p class="text-[13px] mb-3 leading-relaxed" style="color:rgba(255,255,255,0.68);">
-            «Посоветуйте кто делал
-            <span style="color:#FF6B35;font-weight:700;">SEO для интернет-магазина</span>?
-            Бюджет есть, нужно срочно»
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,0.68);margin-bottom:12px;">
+            «Посоветуйте кто делал <span style="color:#FF6B35;font-weight:700;">SEO для интернет-магазина</span>? Бюджет есть, нужно срочно»
           </p>
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-1 text-[11px]" style="color:rgba(255,255,255,0.38);">
-              <i data-lucide="message-circle" style="width:11px;height:11px;"></i>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.38);">
+              <i data-lucide="message-circle" style="width:11px;height:11px;flex-shrink:0;"></i>
               Чат «Бизнес Москва»
             </span>
-            <button class="text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-colors"
-                    style="background:rgba(255,107,53,0.15);color:#FF6B35;"
-                    onmouseover="this.style.background='rgba(255,107,53,0.28)'"
-                    onmouseout="this.style.background='rgba(255,107,53,0.15)'">
-              Написать →
-            </button>
+            <a href="#register" class="card-action">Написать →</a>
           </div>
         </div>
 
-        <!-- Карточка 2 — HH.ru, тёплый -->
-        <div class="lead-card p-4 card-float-d1">
-          <div class="flex items-start justify-between mb-2.5">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
-                   style="background:linear-gradient(135deg,#ef4444,#f97316);">М</div>
-              <div>
-                <p class="text-sm font-semibold leading-tight">Марина Захарова</p>
-                <p class="text-[11px]" style="color:rgba(255,255,255,0.38);">hh.ru · 7 мин назад</p>
+        <!-- Карточка 2 — HH.ru -->
+        <div class="lead-card f1">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+              <div class="avatar" style="background:linear-gradient(135deg,#ef4444,#f97316);">М</div>
+              <div style="min-width:0;">
+                <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Марина Захарова</p>
+                <p style="font-size:11px;color:rgba(255,255,255,0.38);">hh.ru · 7 мин назад</p>
               </div>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="platform-badge" style="background:rgba(239,68,68,0.15);color:#f87171;">
-                HH.ru
-              </span>
-              <span class="platform-badge" style="background:rgba(139,92,246,0.15);color:#a78bfa;">
-                Тёплый
-              </span>
+            <div style="display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+              <span class="badge badge-hh">HH.ru</span>
+              <span class="badge badge-warm">Тёплый</span>
             </div>
           </div>
-          <p class="text-[13px] mb-3 leading-relaxed" style="color:rgba(255,255,255,0.68);">
-            «Компания ищет
-            <span style="color:#FF6B35;font-weight:700;">SMM-специалиста</span>
-            для ведения соцсетей. Рассмотрим фриланс и агентства»
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,0.68);margin-bottom:12px;">
+            «Компания ищет <span style="color:#FF6B35;font-weight:700;">SMM-специалиста</span> для ведения соцсетей. Рассмотрим фриланс и агентства»
           </p>
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-1 text-[11px]" style="color:rgba(255,255,255,0.38);">
-              <i data-lucide="briefcase" style="width:11px;height:11px;"></i>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.38);">
+              <i data-lucide="briefcase" style="width:11px;height:11px;flex-shrink:0;"></i>
               Вакансия · Москва
             </span>
-            <button class="text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-colors"
-                    style="background:rgba(255,107,53,0.15);color:#FF6B35;"
-                    onmouseover="this.style.background='rgba(255,107,53,0.28)'"
-                    onmouseout="this.style.background='rgba(255,107,53,0.15)'">
-              Откликнуться →
-            </button>
+            <a href="#register" class="card-action">Откликнуться →</a>
           </div>
         </div>
 
-        <!-- Карточка 3 — LinkedIn, горячий -->
-        <div class="lead-card p-4 card-float-d2">
-          <div class="flex items-start justify-between mb-2.5">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
-                   style="background:linear-gradient(135deg,#0ea5e9,#6366f1);">С</div>
-              <div>
-                <p class="text-sm font-semibold leading-tight">Сергей Николаев</p>
-                <p class="text-[11px]" style="color:rgba(255,255,255,0.38);">LinkedIn · 14 мин назад</p>
+        <!-- Карточка 3 — LinkedIn -->
+        <div class="lead-card f2">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+              <div class="avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);">С</div>
+              <div style="min-width:0;">
+                <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Сергей Николаев</p>
+                <p style="font-size:11px;color:rgba(255,255,255,0.38);">LinkedIn · 14 мин назад</p>
               </div>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="platform-badge" style="background:rgba(14,165,233,0.15);color:#38bdf8;">
-                <i data-lucide="linkedin" style="width:10px;height:10px;"></i> LinkedIn
-              </span>
-              <span class="platform-badge" style="background:rgba(34,197,94,0.12);color:#22c55e;">
-                Горячий
-              </span>
+            <div style="display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+              <span class="badge badge-li"><i data-lucide="linkedin" style="width:9px;height:9px;"></i> LinkedIn</span>
+              <span class="badge badge-hot">Горячий</span>
             </div>
           </div>
-          <p class="text-[13px] mb-3 leading-relaxed" style="color:rgba(255,255,255,0.68);">
-            «Ищу подрядчика на
-            <span style="color:#FF6B35;font-weight:700;">настройку Яндекс.Директ</span>
-            для e-com. Бюджет от 100к. Кто умеет — пишите»
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,0.68);margin-bottom:12px;">
+            «Ищу подрядчика на <span style="color:#FF6B35;font-weight:700;">настройку Яндекс.Директ</span> для e-com. Бюджет от 100к. Кто умеет — пишите»
           </p>
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-1 text-[11px]" style="color:rgba(255,255,255,0.38);">
-              <i data-lucide="globe" style="width:11px;height:11px;"></i>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.38);">
+              <i data-lucide="globe" style="width:11px;height:11px;flex-shrink:0;"></i>
               Публичный пост
             </span>
-            <button class="text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-colors"
-                    style="background:rgba(255,107,53,0.15);color:#FF6B35;"
-                    onmouseover="this.style.background='rgba(255,107,53,0.28)'"
-                    onmouseout="this.style.background='rgba(255,107,53,0.15)'">
-              Написать →
-            </button>
+            <a href="#register" class="card-action">Написать →</a>
           </div>
         </div>
 
-        <!-- Футер панели — счётчик + площадки -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-2xl"
-             style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">
-          <div class="flex items-center gap-1.5">
+        <!-- Счётчик -->
+        <div style="display:flex;align-items:center;justify-content:space-between;
+                    padding:12px 16px;border-radius:14px;
+                    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">
+          <div style="display:flex;align-items:center;gap:6px;">
             <i data-lucide="zap" style="width:13px;height:13px;color:#FF6B35;flex-shrink:0;"></i>
-            <span class="text-[11px]" style="color:rgba(255,255,255,0.35);">Найдено сегодня</span>
+            <span style="font-size:12px;color:rgba(255,255,255,0.35);">Найдено сегодня</span>
           </div>
-          <div class="flex items-center gap-1.5">
-            <span class="text-sm font-extrabold" id="counter">1 847</span>
-            <span class="text-[11px]" style="color:rgba(255,255,255,0.35);">лидов · 16 площадок</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:14px;font-weight:800;" id="counter">1 847</span>
+            <span style="font-size:12px;color:rgba(255,255,255,0.35);">лидов · 16 площадок</span>
           </div>
         </div>
 
-      </div><!-- /правая колонка -->
+      </div><!-- /правая -->
+
     </div>
   </div>
 
   <!-- Скролл-стрелка -->
-  <div class="relative z-10 flex justify-center pb-8">
-    <div class="scroll-hint flex flex-col items-center gap-1"
-         style="color:rgba(255,255,255,0.18);">
-      <span class="text-[11px] tracking-wider uppercase">листайте вниз</span>
+  <div style="position:relative;z-index:10;display:flex;justify-content:center;padding-bottom:24px;">
+    <div class="scroll-hint" style="display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(255,255,255,0.18);">
+      <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">листайте вниз</span>
       <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
     </div>
   </div>
 
-</section><!-- /hero -->
+</section>
+
+<!-- Адаптивные стили -->
+<style>
+  @media (min-width: 768px) {
+    .nav-links { display: flex !important; align-items: center; gap: 32px; }
+    .nav-login  { display: inline-flex !important; }
+    .hero-layout { flex-direction: row !important; align-items: center; gap: 48px; }
+    .hero-layout > div:first-child { flex: 1; max-width: 600px; }
+    .ui-panel   { max-width: 400px; flex-shrink: 0; }
+    .glow-btn   { width: auto !important; }
+  }
+</style>
 
 <script>
   lucide.createIcons();
 
-  // Живой счётчик лидов
+  // Живой счётчик
   let count = 1847;
-  const counterEl = document.getElementById('counter');
+  const el = document.getElementById('counter');
   setInterval(() => {
     if (Math.random() > 0.55) {
       count += Math.floor(Math.random() * 4) + 1;
-      if (counterEl) counterEl.textContent = count.toLocaleString('ru-RU');
+      if (el) el.textContent = count.toLocaleString('ru-RU');
     }
   }, 3200);
 </script>
