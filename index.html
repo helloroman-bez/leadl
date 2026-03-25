@@ -853,6 +853,67 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     БЛОК 6 — КАЛЬКУЛЯТОР ROI
+════════════════════════════════════════ -->
+<section id="roi" style="background:#F7F7FA;padding:0 20px 88px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:34px;">
+      <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
+        Посчитайте, сколько клиентов вы теряете каждый день
+      </h2>
+    </div>
+
+    <div class="roi-shell">
+      <div class="roi-form">
+        <label class="roi-label" for="roi-niche">Ниша</label>
+        <select id="roi-niche" class="roi-input">
+          <option value="repair">Ремонт</option>
+          <option value="law">Юристы</option>
+          <option value="marketing">Маркетинг</option>
+          <option value="it">IT</option>
+          <option value="hr">HR</option>
+          <option value="consulting">Консалтинг</option>
+          <option value="other">Другое</option>
+        </select>
+
+        <label class="roi-label" for="roi-check">Средний чек (₽)</label>
+        <input id="roi-check" class="roi-input" type="number" min="1000" step="1000" value="120000" />
+
+        <label class="roi-label" for="roi-conversion">
+          Конверсия (%)
+          <span class="roi-hint">обычно 5-15%</span>
+        </label>
+        <input id="roi-conversion" class="roi-input" type="number" min="1" max="100" step="1" value="10" />
+      </div>
+
+      <div class="roi-result-card">
+        <div class="roi-row">
+          <span class="roi-key">Лидов в месяц</span>
+          <strong id="roi-leads">30-80</strong>
+        </div>
+        <div class="roi-row">
+          <span class="roi-key">Продаж</span>
+          <strong id="roi-sales">5</strong>
+        </div>
+        <div class="roi-revenue-wrap">
+          <p class="roi-key">Дополнительная выручка</p>
+          <p class="roi-revenue" id="roi-revenue">600 000 ₽</p>
+        </div>
+        <div class="roi-row">
+          <span class="roi-key">ROI</span>
+          <strong id="roi-value">35.3x</strong>
+        </div>
+
+        <a href="#register" class="glow-btn" style="margin-top:16px;width:100%;">
+          Начать получать этих клиентов
+          <i data-lucide="arrow-right" style="width:17px;height:17px;flex-shrink:0;"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Адаптивные стили -->
 <style>
   @media (min-width: 768px) {
@@ -1202,6 +1263,82 @@
     font-weight: 800;
   }
 
+  /* ── Блок "Калькулятор ROI" ── */
+  .roi-shell {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .roi-form,
+  .roi-result-card {
+    background: #fff;
+    border: 1px solid #ececf2;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+  }
+  .roi-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .roi-hint {
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .roi-input {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    font-family: 'Manrope', sans-serif;
+    color: #111827;
+    background: #fff;
+  }
+  .roi-input:focus {
+    outline: none;
+    border-color: rgba(255,107,53,0.6);
+    box-shadow: 0 0 0 3px rgba(255,107,53,0.15);
+  }
+  .roi-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .roi-key {
+    color: #6b7280;
+    font-size: 14px;
+  }
+  .roi-row strong {
+    color: #111827;
+    font-size: 22px;
+    font-weight: 800;
+  }
+  .roi-revenue-wrap {
+    border: 1px solid rgba(255,107,53,0.2);
+    border-radius: 14px;
+    background: rgba(255,107,53,0.07);
+    padding: 12px;
+    margin: 12px 0;
+  }
+  .roi-revenue {
+    color: #FF6B35;
+    font-size: clamp(30px,6vw,42px);
+    line-height: 1;
+    font-weight: 800;
+    margin-top: 4px;
+    letter-spacing: -0.03em;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .demo-screen,
     .demo-screen.is-active {
@@ -1221,6 +1358,10 @@
   .arrow-icon-v { display: block; }
 
   @media (min-width: 900px) {
+    .roi-shell {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
     .cases-grid {
       grid-template-columns: repeat(2, minmax(0,1fr));
     }
@@ -1333,6 +1474,74 @@
     setDemoScreen(0);
     startDemoRotation();
   }
+
+  // Калькулятор ROI: пересчёт в реальном времени + плавная анимация цифр
+  const roiNiche = document.getElementById('roi-niche');
+  const roiCheck = document.getElementById('roi-check');
+  const roiConversion = document.getElementById('roi-conversion');
+  const roiLeads = document.getElementById('roi-leads');
+  const roiSales = document.getElementById('roi-sales');
+  const roiRevenue = document.getElementById('roi-revenue');
+  const roiValue = document.getElementById('roi-value');
+
+  const roiLeadsByNiche = {
+    repair: [42, 80],
+    law: [34, 62],
+    marketing: [45, 78],
+    it: [36, 68],
+    hr: [30, 55],
+    consulting: [32, 60],
+    other: [30, 80]
+  };
+  const roiSubscriptionCost = 17000;
+
+  function animateNumber(el, to, suffix = '', decimals = 0) {
+    if (!el) return;
+    const from = Number(el.dataset.current || 0);
+    const duration = 420;
+    const start = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const value = from + (to - from) * progress;
+      const formatted = decimals > 0
+        ? value.toFixed(decimals).replace('.', ',')
+        : Math.round(value).toLocaleString('ru-RU');
+      el.textContent = `${formatted}${suffix}`;
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.dataset.current = String(to);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  }
+
+  function updateRoi() {
+    if (!roiNiche || !roiCheck || !roiConversion) return;
+
+    const [minLeads, maxLeads] = roiLeadsByNiche[roiNiche.value] || roiLeadsByNiche.other;
+    const avgLeads = (minLeads + maxLeads) / 2;
+    const conversion = Math.max(1, Math.min(100, Number(roiConversion.value) || 1));
+    const check = Math.max(1000, Number(roiCheck.value) || 1000);
+
+    const sales = avgLeads * (conversion / 100);
+    const revenue = sales * check;
+    const roi = revenue / roiSubscriptionCost;
+
+    if (roiLeads) roiLeads.textContent = `${minLeads}-${maxLeads}`;
+    animateNumber(roiSales, sales, '', 1);
+    animateNumber(roiRevenue, revenue, ' ₽', 0);
+    animateNumber(roiValue, roi, 'x', 1);
+  }
+
+  [roiNiche, roiCheck, roiConversion].forEach((field) => {
+    if (!field) return;
+    field.addEventListener('input', updateRoi);
+    field.addEventListener('change', updateRoi);
+  });
+  updateRoi();
 </script>
 
 <!-- Lucide в самом конце body — гарантирует загрузку после DOM -->
