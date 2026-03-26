@@ -11,6 +11,9 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+    }
     html, body {
       background: #0A0A0F;
       color: #fff;
@@ -18,6 +21,207 @@
       overflow-x: hidden;
       min-height: 100%;
     }
+
+    /* ── Типографика premium ── */
+    h1, h2 { letter-spacing: -0.03em; }
+    p, li, td { line-height: 1.65; }
+
+    /* ── Фокус ── */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid #FF6B35;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* ── Sticky nav ── */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 20px;
+      transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      will-change: padding, background;
+    }
+    .site-nav.is-scrolled {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background: rgba(10,10,15,0.88);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ── Гамбургер ── */
+    .hamburger {
+      display: flex;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hamburger span {
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: block;
+    }
+    .hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .hamburger.is-open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,15,0.96);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .mobile-menu.is-open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: #FF6B35; }
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-child {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      will-change: opacity, transform;
+    }
+    .reveal-child.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Hero entrance ── */
+    .hero-anim {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: heroIn 0.6s ease forwards;
+    }
+    @keyframes heroIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-d1 { animation-delay: 0.1s; }
+    .hero-d2 { animation-delay: 0.3s; }
+    .hero-d3 { animation-delay: 0.5s; }
+    .hero-d4 { animation-delay: 0.7s; }
+    .hero-d5 { animation-delay: 0.85s; }
+    .hero-d6 { animation-delay: 1s; }
+    .hero-cta-anim {
+      opacity: 0;
+      animation: ctaBounce 0.7s ease 1.1s forwards;
+    }
+    @keyframes ctaBounce {
+      0%   { opacity: 0; transform: scale(0.9); }
+      70%  { opacity: 1; transform: scale(1.04); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .hero-panel-anim {
+      opacity: 0;
+      transform: translateX(40px);
+      animation: panelSlide 0.7s ease 0.8s forwards;
+    }
+    @keyframes panelSlide {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── Shimmer на кнопках ── */
+    .glow-btn, .final-cta-btn, .price-cta {
+      position: relative;
+      overflow: hidden;
+    }
+    .glow-btn::after, .final-cta-btn::after, .price-cta::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      animation: shimmer 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%,100% { left: -100%; }
+      50%     { left: 150%; }
+    }
+
+    /* ── Nav link underline ── */
+    .nav-links a {
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FF6B35;
+      border-radius: 1px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: #fff !important; }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── Compare table row hover ── */
+    .compare-table tbody tr { transition: background 0.2s; }
+    .compare-table tbody tr:hover { background: rgba(255,107,53,0.04); }
+
+    /* ── FAQ icon rotation ── */
+    .faq-icon {
+      transition: transform 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .faq-item.is-open .faq-icon { transform: rotate(45deg); }
+
+    /* ── Benefit icon wobble ── */
+    @keyframes iconWobble {
+      0%   { transform: rotate(-6deg); }
+      40%  { transform: rotate(6deg); }
+      100% { transform: rotate(0); }
+    }
+    .benefit-icon.is-wobble { animation: iconWobble 0.5s ease; }
 
     /* ── Сетка фона ── */
     .grid-bg {
@@ -70,8 +274,8 @@
       .glow-btn { width: auto; }
     }
     .glow-btn:hover {
-      box-shadow: 0 0 52px rgba(255,107,53,0.65);
-      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(255,107,53,0.4), 0 0 52px rgba(255,107,53,0.55);
+      transform: translateY(-2px) scale(1.03);
     }
 
     /* ── Пульс ── */
@@ -187,9 +391,9 @@
                 background:linear-gradient(90deg,transparent,rgba(255,107,53,0.5) 40%,rgba(255,107,53,0.5) 60%,transparent);"></div>
   </div>
 
-  <!-- ── НАВБАР ── -->
-  <nav style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;
-              padding:18px 20px;max-width:1200px;margin:0 auto;width:100%;">
+  <!-- ── НАВБАР (sticky) ── -->
+  <nav class="site-nav" style="display:flex;align-items:center;justify-content:space-between;
+              max-width:1200px;margin:0 auto;width:100%;">
     <!-- Лого -->
     <div style="display:flex;align-items:center;gap:8px;">
       <div style="width:30px;height:30px;min-width:30px;background:linear-gradient(135deg,#FF6B35,#e04d15);
@@ -203,22 +407,44 @@
 
     <!-- Меню — только десктоп -->
     <div style="display:none;" class="nav-links">
-      <a href="#how"       style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Как работает</a>
-      <a href="#platforms" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Площадки</a>
-      <a href="#pricing"   style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Тарифы</a>
-      <a href="#cases"     style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Кейсы</a>
+      <a href="#how"     style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Как работает</a>
+      <a href="#pricing" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Тарифы</a>
+      <a href="#cases"   style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">Кейсы</a>
+      <a href="#faq"     style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:14px;">FAQ</a>
     </div>
 
-    <a href="https://platform.leadl.ai/register?ref=B6Z0UQNL" style="display:none;padding:8px 18px;border-radius:10px;
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="https://platform.leadl.ai/register?ref=B6Z0UQNL" style="display:none;padding:8px 18px;border-radius:10px;
+         background:linear-gradient(135deg,#FF6B35,#e04d15);color:#fff;
+         font-size:14px;font-weight:700;text-decoration:none;
+         box-shadow:0 0 16px rgba(255,107,53,0.35);
+         transition:box-shadow 0.2s,transform 0.15s;" class="nav-login">
+        Начать бесплатно
+      </a>
+      <!-- Гамбургер — мобайл -->
+      <button class="hamburger" id="hamburger-btn" aria-label="Открыть меню" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Мобильное меню -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#how"     class="mobile-menu-link">Как работает</a>
+    <a href="#pricing" class="mobile-menu-link">Тарифы</a>
+    <a href="#cases"   class="mobile-menu-link">Кейсы</a>
+    <a href="#faq"     class="mobile-menu-link">FAQ</a>
+    <a href="https://platform.leadl.ai/register?ref=B6Z0UQNL"
+       style="margin-top:12px;padding:14px 32px;border-radius:12px;
        background:linear-gradient(135deg,#FF6B35,#e04d15);color:#fff;
-       font-size:14px;font-weight:700;text-decoration:none;
-       box-shadow:0 0 16px rgba(255,107,53,0.35);
-       transition:box-shadow 0.2s,transform 0.15s;" class="nav-login"
-       onmouseover="this.style.boxShadow='0 0 28px rgba(255,107,53,0.55)';this.style.transform='translateY(-1px)'"
-       onmouseout="this.style.boxShadow='0 0 16px rgba(255,107,53,0.35)';this.style.transform='translateY(0)'">
+       font-size:16px;font-weight:800;text-decoration:none;
+       box-shadow:0 0 24px rgba(255,107,53,0.4);">
       Начать бесплатно
     </a>
-  </nav>
+  </div>
+
+  <!-- Спейсер под фиксированную навигацию -->
+  <div style="height:70px;flex-shrink:0;" aria-hidden="true"></div>
 
   <!-- ── КОНТЕНТ ── -->
   <div style="position:relative;z-index:10;flex:1;display:flex;align-items:center;
@@ -230,7 +456,7 @@
       <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%;">
 
         <!-- Статус-бейдж -->
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+        <div class="hero-anim hero-d1" style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
                     background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);margin-bottom:20px;">
           <span class="dot-pulse" style="width:7px;height:7px;border-radius:50%;background:#FF6B35;display:inline-block;flex-shrink:0;"></span>
           <span style="font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6B35;">
@@ -239,23 +465,23 @@
         </div>
 
         <!-- H1 -->
-        <h1 style="font-size:clamp(32px,7vw,54px);font-weight:800;line-height:1.08;
+        <h1 class="hero-anim hero-d2" style="font-size:clamp(32px,7vw,54px);font-weight:800;line-height:1.08;
                    letter-spacing:-0.5px;margin-bottom:18px;">
           <span class="gradient-text">Клиенты ищут вас прямо сейчас<br>на&nbsp;16+&nbsp;площадках.</span><br>
           <span class="accent-text">Мы их находим.</span>
         </h1>
 
         <!-- Подзаголовок -->
-        <p style="font-size:15px;line-height:1.65;color:rgba(255,255,255,0.52);margin-bottom:6px;">
+        <p class="hero-anim hero-d3" style="font-size:15px;line-height:1.65;color:rgba(255,255,255,0.52);margin-bottom:6px;">
           AI мониторит Telegram, HH.ru, SuperJob, LinkedIn, Reddit,
           фриланс-биржи 24/7 и присылает контакты людей, которым нужны ваши услуги.
         </p>
-        <p style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:24px;">
+        <p class="hero-anim hero-d3" style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:24px;">
           Настройка — 4 минуты.
         </p>
 
         <!-- Площадки-пилюли -->
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;">
+        <div class="hero-anim hero-d4" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;">
           <span class="pill pill-active">
             <i data-lucide="send" style="width:11px;height:11px;"></i> Telegram
           </span>
@@ -269,13 +495,13 @@
         </div>
 
         <!-- CTA -->
-        <a href="https://platform.leadl.ai/register?ref=B6Z0UQNL" class="glow-btn" style="margin-bottom:20px;">
+        <a href="https://platform.leadl.ai/register?ref=B6Z0UQNL" class="glow-btn hero-cta-anim" style="margin-bottom:20px;">
           Получить первых лидов бесплатно
           <i data-lucide="arrow-right" style="width:18px;height:18px;flex-shrink:0;"></i>
         </a>
 
         <!-- Метрики -->
-        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div class="hero-anim hero-d5" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
           <div style="display:flex;flex-direction:column;">
             <span style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.9);">160+</span>
             <span style="font-size:11px;color:rgba(255,255,255,0.38);">компаний</span>
@@ -300,7 +526,7 @@
       </div><!-- /левая -->
 
       <!-- ═══ Правая колонка — UI-панель ═══ -->
-      <div style="display:flex;flex-direction:column;gap:10px;width:100%;" class="ui-panel">
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;" class="ui-panel hero-panel-anim">
 
         <!-- Шапка панели -->
         <div style="display:flex;align-items:center;justify-content:space-between;
@@ -438,7 +664,7 @@
   <div style="max-width:1100px;margin:0 auto;">
 
     <!-- Заголовок блока -->
-    <div style="text-align:center;margin-bottom:56px;">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.25);margin-bottom:16px;">
         <svg viewBox="0 0 24 24" style="width:13px;height:13px;color:#FF6B35;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -461,7 +687,7 @@
     </div>
 
     <!-- Шаги -->
-    <div class="how-steps">
+    <div class="how-steps reveal">
 
       <!-- ── Шаг 1 ── -->
       <div class="how-step">
@@ -633,7 +859,7 @@
 ════════════════════════════════════════ -->
 <section id="demo" style="background:#fff;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:24px;">
+    <div class="reveal" style="text-align:center;margin-bottom:24px;">
       <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
         Вот как выглядят ваши будущие клиенты
       </h2>
@@ -758,13 +984,13 @@
 ════════════════════════════════════════ -->
 <section id="benefits" style="background:#F7F7FA;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:34px;">
+    <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
         Почему это работает лучше, чем вы привыкли
       </h2>
     </div>
 
-    <div class="benefits-grid">
+    <div class="benefits-grid reveal">
       <article class="benefit-card">
         <div class="benefit-icon">
           <i data-lucide="brain-circuit" style="width:18px;height:18px;color:#FF6B35;"></i>
@@ -824,7 +1050,7 @@
 ════════════════════════════════════════ -->
 <section id="cases" style="background:#fff;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:34px;">
+    <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.22);margin-bottom:14px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;color:#FF6B35;flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -835,7 +1061,7 @@
       </h2>
     </div>
 
-    <div class="cases-grid">
+    <div class="cases-grid reveal">
       <article class="case-card">
         <p class="case-niche">Авитологи</p>
         <p class="case-big">8 продаж/мес</p>
@@ -868,7 +1094,7 @@
 ════════════════════════════════════════ -->
 <section id="roi" style="background:#F7F7FA;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:34px;">
+    <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.22);margin-bottom:14px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;color:#FF6B35;flex-shrink:0;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -934,7 +1160,7 @@
 ════════════════════════════════════════ -->
 <section id="pricing" style="background:#fff;padding:0 20px 92px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:34px;">
+    <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.22);margin-bottom:14px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;color:#FF6B35;flex-shrink:0;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -946,7 +1172,7 @@
       <p style="margin-top:12px;color:#6b7280;font-size:16px;">Все тарифы — 4 месяца по цене 3</p>
     </div>
 
-    <div class="pricing-grid">
+    <div class="pricing-grid reveal">
       <article class="price-card">
         <p class="price-plan">База</p>
         <p class="price-value">8 000 ₽/мес</p>
@@ -1005,7 +1231,7 @@
 ════════════════════════════════════════ -->
 <section id="compare" style="background:#F7F7FA;padding:0 20px 92px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:34px;">
+    <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.22);margin-bottom:14px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;color:#FF6B35;flex-shrink:0;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -1133,7 +1359,7 @@
 ════════════════════════════════════════ -->
 <section id="faq" style="background:#fff;padding:0 20px 92px;">
   <div style="max-width:800px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:24px;">
+    <div class="reveal" style="text-align:center;margin-bottom:24px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
                   background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.22);margin-bottom:14px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;color:#FF6B35;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -1145,7 +1371,7 @@
       <p style="margin-top:10px;color:#6b7280;font-size:16px;">Отвечаем на то, что спрашивают чаще всего</p>
     </div>
 
-    <div class="faq-wrap">
+    <div class="faq-wrap reveal">
       <article class="faq-item is-open">
         <button class="faq-question" type="button">
           <span>Это подойдёт для моей ниши?</span>
@@ -1228,7 +1454,7 @@
                 background:radial-gradient(circle,rgba(255,107,53,0.14) 0%,rgba(255,107,53,0.05) 30%,transparent 70%);"></div>
   </div>
 
-  <div style="position:relative;z-index:1;max-width:700px;margin:0 auto;text-align:center;">
+  <div class="reveal" style="position:relative;z-index:1;max-width:700px;margin:0 auto;text-align:center;">
     <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.15;letter-spacing:-0.4px;color:#fff;margin-bottom:14px;">
       Пока вы читали эту страницу, десятки людей написали на <span style="color:#FF6B35;">16+ площадках</span> что ищут ваши услуги
     </h2>
@@ -1310,11 +1536,12 @@
     border-radius: 20px;
     padding: 28px 24px;
     height: 100%;
-    transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
   .step-card:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 12px 36px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
   .step-card-accent {
     border-color: rgba(255,107,53,0.25);
@@ -1555,7 +1782,12 @@
     border: 1px solid #ececf2;
     border-radius: 18px;
     padding: 18px;
-    box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .benefit-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 12px 36px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
   .benefit-icon {
     width: 36px;
@@ -1605,7 +1837,12 @@
     border: 1px solid #ececf2;
     border-radius: 18px;
     padding: 20px;
-    box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .case-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 12px 36px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
   .case-niche {
     color: #6b7280;
@@ -1721,14 +1958,22 @@
     border: 1px solid #ececf2;
     border-radius: 18px;
     padding: 20px;
-    box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.06);
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .price-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 12px 36px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
   .price-card .price-features { flex: 1; }
   .price-card-popular {
     border-color: rgba(255,107,53,0.4);
-    box-shadow: 0 14px 32px rgba(255,107,53,0.12);
+    box-shadow: 0 4px 14px rgba(255,107,53,0.15), 0 14px 32px rgba(255,107,53,0.12);
+  }
+  .price-card-popular:hover {
+    box-shadow: 0 6px 20px rgba(255,107,53,0.25), 0 18px 40px rgba(255,107,53,0.18);
   }
   .price-badge {
     position: absolute;
@@ -1990,8 +2235,8 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .final-cta-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 34px rgba(255,107,53,0.55);
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(255,107,53,0.4), 0 0 40px rgba(255,107,53,0.5);
   }
   .final-trust-grid {
     margin-top: 18px;
@@ -2068,6 +2313,17 @@
   .ci-meh::before  { content: '−'; }
 
   @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    .reveal, .reveal-child,
+    .hero-anim, .hero-cta-anim, .hero-panel-anim {
+      opacity: 1 !important;
+      transform: none !important;
+    }
     .demo-screen,
     .demo-screen.is-active {
       transition: none;
@@ -2123,6 +2379,44 @@
     }
     .arrow-icon-h { display: block; }
     .arrow-icon-v { display: none; }
+  }
+
+  /* ── Акцентные цифры — крупнее окружения ── */
+  .benefit-highlight span {
+    font-size: 1.6em;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  /* ── Мобильные CTA — удобная тач-зона ── */
+  @media (max-width: 767px) {
+    .glow-btn,
+    .final-cta-btn,
+    .price-cta {
+      min-height: 56px;
+      font-size: 16px;
+    }
+    .faq-question {
+      min-height: 48px;
+    }
+  }
+
+  /* ── prefers-reduced-motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal, .reveal-child {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .hero-anim, .hero-cta-anim, .hero-panel-anim {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 </style>
 
@@ -2278,6 +2572,103 @@
     field.addEventListener('change', updateRoi);
   });
   updateRoi();
+
+  // ── Intersection Observer — scroll reveal ──
+  (function() {
+    const revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+
+    const io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+
+          // Staggered children
+          const children = entry.target.querySelectorAll('.reveal-child');
+          children.forEach(function(child, i) {
+            child.style.transitionDelay = (i * 0.1) + 's';
+            child.classList.add('is-visible');
+          });
+
+          // Benefit icon wobble
+          const icons = entry.target.querySelectorAll('.benefit-icon');
+          icons.forEach(function(icon, i) {
+            setTimeout(function() {
+              icon.classList.add('is-wobble');
+              icon.addEventListener('animationend', function() {
+                icon.classList.remove('is-wobble');
+              }, { once: true });
+            }, i * 120);
+          });
+
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(function(el) { io.observe(el); });
+  })();
+
+  // ── Sticky nav scroll handler ──
+  (function() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    var scrolled = false;
+    window.addEventListener('scroll', function() {
+      var shouldScroll = window.scrollY > 40;
+      if (shouldScroll !== scrolled) {
+        scrolled = shouldScroll;
+        nav.classList.toggle('is-scrolled', scrolled);
+      }
+    }, { passive: true });
+  })();
+
+  // ── Hamburger menu toggle ──
+  (function() {
+    var btn = document.getElementById('hamburger-btn');
+    var menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', function() {
+      var open = btn.classList.toggle('is-open');
+      menu.classList.toggle('is-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Close on link click
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('is-open');
+        menu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+
+  // ── CountUp animation for hero counter ──
+  (function() {
+    var counterEl = document.getElementById('counter');
+    if (!counterEl) return;
+    var target = 1847;
+    var duration = 2000;
+    var start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      // ease-out quad
+      var ease = 1 - (1 - progress) * (1 - progress);
+      var val = Math.round(ease * target);
+      counterEl.textContent = val.toLocaleString('ru-RU');
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    // Start from 0
+    counterEl.textContent = '0';
+    requestAnimationFrame(step);
+  })();
 
   // FAQ аккордеон: можно раскрывать несколько вопросов одновременно
   const faqItems = Array.from(document.querySelectorAll('.faq-item'));
