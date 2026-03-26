@@ -1222,6 +1222,28 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     БЛОК 11 — ФУТЕР
+════════════════════════════════════════ -->
+<footer style="background:#0A0A0F;border-top:1px solid rgba(255,255,255,0.08);padding:30px 20px 34px;">
+  <div class="footer-wrap">
+    <div class="footer-brand">LeadL</div>
+
+    <nav class="footer-links" aria-label="Юридическая навигация">
+      <a href="#" class="footer-link">Политика</a>
+      <a href="#" class="footer-link">Оферта</a>
+      <a href="#" class="footer-link">Контакты</a>
+    </nav>
+
+    <div class="footer-contacts">
+      <a class="footer-link" href="https://t.me/" target="_blank" rel="noopener noreferrer">Telegram-канал</a>
+      <a class="footer-link" href="mailto:support@leadl.ai">support@leadl.ai</a>
+    </div>
+
+    <p class="footer-copy">© 2026 LeadL. Все права защищены.</p>
+  </div>
+</footer>
+
 <!-- Адаптивные стили -->
 <style>
   @media (min-width: 768px) {
@@ -1941,6 +1963,43 @@
     color: #9a9aaa;
     font-size: 13px;
     white-space: nowrap;
+  }
+
+  /* ── Футер ── */
+  .footer-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .footer-brand {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .footer-links,
+  .footer-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .footer-link {
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .footer-link:hover {
+    color: #fff;
+  }
+  .footer-copy {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
