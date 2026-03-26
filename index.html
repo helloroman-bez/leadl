@@ -1189,6 +1189,39 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     ФИНАЛЬНЫЙ CTA-БЛОК
+════════════════════════════════════════ -->
+<section id="final-cta" style="background:#0A0A0F;padding:110px 20px;position:relative;overflow:hidden;">
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;">
+    <div style="position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:740px;height:420px;border-radius:50%;
+                background:radial-gradient(circle,rgba(255,107,53,0.14) 0%,rgba(255,107,53,0.05) 30%,transparent 70%);"></div>
+  </div>
+
+  <div style="position:relative;z-index:1;max-width:700px;margin:0 auto;text-align:center;">
+    <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.15;letter-spacing:-0.4px;color:#fff;margin-bottom:14px;">
+      Пока вы читали эту страницу, десятки людей написали на <span style="color:#FF6B35;">16+ площадках</span> что ищут ваши услуги
+    </h2>
+    <p style="font-size:clamp(18px,2.4vw,20px);line-height:1.6;color:#A0A0A0;margin-bottom:22px;">
+      Зарегистрируйтесь и получите первых лидов за 4 минуты. Бесплатно.
+    </p>
+
+    <a href="#register" class="final-cta-btn">
+      Начать бесплатно
+      <i data-lucide="arrow-right" style="width:18px;height:18px;flex-shrink:0;"></i>
+    </a>
+
+    <p style="font-size:14px;color:#7f7f8d;margin-top:14px;">Без карты. Без обязательств. Первые лиды — бесплатно.</p>
+
+    <div class="final-trust-grid">
+      <span class="final-trust-item"><i data-lucide="users" style="width:14px;height:14px;"></i> 160+ компаний</span>
+      <span class="final-trust-item"><i data-lucide="globe" style="width:14px;height:14px;"></i> 16+ площадок</span>
+      <span class="final-trust-item"><i data-lucide="clock" style="width:14px;height:14px;"></i> 4 мин настройка</span>
+      <span class="final-trust-item"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> AI-фильтрация</span>
+    </div>
+  </div>
+</section>
+
 <!-- Адаптивные стили -->
 <style>
   @media (min-width: 768px) {
@@ -1872,6 +1905,44 @@
     color: #6b7280;
   }
 
+  /* ── Финальный CTA ── */
+  .final-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 460px;
+    padding: 18px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 800;
+    background: #FF6B35;
+    box-shadow: 0 0 20px rgba(255,107,53,0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .final-cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 34px rgba(255,107,53,0.55);
+  }
+  .final-trust-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 9px 14px;
+  }
+  .final-trust-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #9a9aaa;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .demo-screen,
     .demo-screen.is-active {
@@ -1891,6 +1962,9 @@
   .arrow-icon-v { display: block; }
 
   @media (min-width: 900px) {
+    .final-trust-grid {
+      grid-template-columns: repeat(4, minmax(0,1fr));
+    }
     .compare-cards { display: none; }
     .compare-table-wrap { display: block; }
     .pricing-grid {
