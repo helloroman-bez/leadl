@@ -1,9 +1,141 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" prefix="og: https://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeadL — AI-лидогенерация с 16+ площадок</title>
+
+  <!-- ── SEO ── -->
+  <title>AI-лидогенерация из Telegram, HH.ru, LinkedIn и 16+ площадок | LeadL</title>
+  <meta name="description" content="LeadL — AI мониторит 16+ площадок 24/7 и находит клиентов, которые ищут ваши услуги прямо сейчас. Настройка за 4 минуты. Первые лиды бесплатно." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://leadl.ai/" />
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://leadl.ai/" />
+  <meta property="og:title"       content="AI-лидогенерация из Telegram, HH.ru, LinkedIn и 16+ площадок | LeadL" />
+  <meta property="og:description" content="AI мониторит 16+ площадок 24/7 и присылает контакты людей, которые уже ищут ваши услуги. Настройка — 4 минуты. Первые лиды бесплатно." />
+  <meta property="og:image"       content="https://leadl.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale"      content="ru_RU" />
+  <meta property="og:site_name"   content="LeadL" />
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="AI-лидогенерация из Telegram, HH.ru, LinkedIn и 16+ площадок | LeadL" />
+  <meta name="twitter:description" content="AI мониторит 16+ площадок 24/7 и присылает контакты людей, которые уже ищут ваши услуги." />
+  <meta name="twitter:image"       content="https://leadl.ai/og-image.png" />
+
+  <!-- ── Favicon (SVG) ── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23FF6B35'/><path d='M7 16l6 6 12-12' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" />
+
+  <!-- ── Schema.org: SoftwareApplication ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "LeadL",
+    "url": "https://leadl.ai/",
+    "description": "AI-сервис лидогенерации, который мониторит 16+ площадок (Telegram, HH.ru, LinkedIn, Reddit и другие) и находит клиентов, ищущих ваши услуги прямо сейчас.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "База",
+        "price": "8000",
+        "priceCurrency": "RUB",
+        "billingIncrement": "P1M"
+      },
+      {
+        "@type": "Offer",
+        "name": "Стартап",
+        "price": "17000",
+        "priceCurrency": "RUB",
+        "billingIncrement": "P1M"
+      },
+      {
+        "@type": "Offer",
+        "name": "Бизнес",
+        "price": "25000",
+        "priceCurrency": "RUB",
+        "billingIncrement": "P1M"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "160"
+    }
+  }
+  </script>
+
+  <!-- ── Schema.org: FAQPage ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Это подойдёт для моей ниши?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Сервис работает для любого B2B-бизнеса. Мы мониторим 16+ площадок: Telegram-чаты, HH.ru, SuperJob, Habr Career, FL.ru, Kwork, LinkedIn, Reddit, Hacker News, Remote OK и другие. Ремонт, юристы, маркетинг, IT, HR, консалтинг, стоматологии — десятки ниш уже подключены. При регистрации AI сам подберёт площадки и запросы под ваш бизнес."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Сколько стоит?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Три тарифа: База — 8 000 ₽/мес (до 150 источников, для первых продаж), Стартап — 17 000 ₽/мес (до 300 источников, CRM, ретро-поиск), Бизнес — 25 000 ₽/мес (до 500 источников, личный менеджер, webhook-интеграции). Сейчас действует акция: 4 месяца по цене 3. Первые лиды — бесплатно при регистрации через ретро-поиск."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "А если одну из площадок заблокируют?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Инфраструктура сервиса находится за пределами РФ. Плюс мы работаем с 16+ площадками одновременно — если одна станет недоступна, остальные продолжат приносить лидов. Это и есть диверсификация: вы не зависите от одного источника."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Это не будет спамом?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Нет. Мы не пишем людям от вашего имени и не рассылаем сообщения. Мы находим людей, которые сами написали что ищут вашу услугу, и передаём вам их контакт. Вы сами решаете, как и когда обратиться."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Нужны ли технические навыки?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Нет. AI-агент сам настраивает всё за вас: подбирает площадки, формирует поисковые запросы, настраивает фильтры. Вы только описываете свой бизнес в свободной форме — система делает остальное. Весь процесс занимает 4 минуты."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Чем отличаетесь от Shikari и других парсеров?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Три ключевых отличия. Первое — AI-фильтрация вместо ключевых слов: 5-ступенчатая воронка, которая понимает контекст сообщения. Результат — на 76% меньше мусора. Второе — 16+ площадок одновременно, а не только Telegram. Третье — онбординг за 4 минуты."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Можно попробовать бесплатно?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Да. При регистрации вы получаете первых лидов бесплатно через ретро-поиск — система находит запросы из вашей ниши за последние дни и сразу показывает результат. Вы увидите реальные лиды ещё до оплаты."
+        }
+      }
+    ]
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -392,13 +524,14 @@
   </div>
 
   <!-- ── НАВБАР (sticky) ── -->
-  <nav class="site-nav" style="display:flex;align-items:center;justify-content:space-between;
-              max-width:1200px;margin:0 auto;width:100%;">
+  <nav class="site-nav" style="padding-left:20px;padding-right:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;
+                max-width:1200px;margin:0 auto;width:100%;">
     <!-- Лого -->
     <div style="display:flex;align-items:center;gap:8px;">
       <div style="width:30px;height:30px;min-width:30px;background:linear-gradient(135deg,#FF6B35,#e04d15);
                   border-radius:7px;display:flex;align-items:center;justify-content:center;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M2 8l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
@@ -426,6 +559,7 @@
         <span></span><span></span><span></span>
       </button>
     </div>
+    </div><!-- /inner max-width -->
   </nav>
 
   <!-- Мобильное меню -->
@@ -546,7 +680,7 @@
         <div class="lead-card f0">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-              <div class="avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">А</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);" role="img" aria-label="Аватар Алексей Ковалёв">А</div>
               <div style="min-width:0;">
                 <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Алексей Ковалёв</p>
                 <p style="font-size:11px;color:rgba(255,255,255,0.38);">@alex_dev · 2 мин назад</p>
@@ -573,7 +707,7 @@
         <div class="lead-card f1">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-              <div class="avatar" style="background:linear-gradient(135deg,#ef4444,#f97316);">М</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#ef4444,#f97316);" role="img" aria-label="Аватар Марина Захарова">М</div>
               <div style="min-width:0;">
                 <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Марина Захарова</p>
                 <p style="font-size:11px;color:rgba(255,255,255,0.38);">hh.ru · 7 мин назад</p>
@@ -600,7 +734,7 @@
         <div class="lead-card f2">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-              <div class="avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);">С</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);" role="img" aria-label="Аватар Сергей Николаев">С</div>
               <div style="min-width:0;">
                 <p style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Сергей Николаев</p>
                 <p style="font-size:11px;color:rgba(255,255,255,0.38);">LinkedIn · 14 мин назад</p>
@@ -660,7 +794,7 @@
 <!-- ═══════════════════════════════════════
      БЛОК 2 — КАК ЭТО РАБОТАЕТ
 ════════════════════════════════════════ -->
-<section id="how" style="background:#F7F7FA;padding:80px 20px;">
+<section id="how" aria-label="Как работает LeadL" style="background:#F7F7FA;padding:80px 20px;">
   <div style="max-width:1100px;margin:0 auto;">
 
     <!-- Заголовок блока -->
@@ -982,7 +1116,7 @@
 <!-- ═══════════════════════════════════════
      БЛОК 4 — ПРЕИМУЩЕСТВА
 ════════════════════════════════════════ -->
-<section id="benefits" style="background:#F7F7FA;padding:0 20px 88px;">
+<section id="benefits" aria-label="Преимущества LeadL" style="background:#F7F7FA;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <h2 style="font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.12;letter-spacing:-0.4px;color:#0A0A0F;">
@@ -1048,7 +1182,7 @@
 <!-- ═══════════════════════════════════════
      БЛОК 5 — КЕЙСЫ С ЦИФРАМИ
 ════════════════════════════════════════ -->
-<section id="cases" style="background:#fff;padding:0 20px 88px;">
+<section id="cases" aria-label="Кейсы клиентов" style="background:#fff;padding:0 20px 88px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
@@ -1158,7 +1292,7 @@
 <!-- ═══════════════════════════════════════
      БЛОК 7 — ТАРИФЫ
 ════════════════════════════════════════ -->
-<section id="pricing" style="background:#fff;padding:0 20px 92px;">
+<section id="pricing" aria-label="Тарифы и цены" style="background:#fff;padding:0 20px 92px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="reveal" style="text-align:center;margin-bottom:34px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
@@ -1357,7 +1491,7 @@
 <!-- ═══════════════════════════════════════
      БЛОК 9 — FAQ
 ════════════════════════════════════════ -->
-<section id="faq" style="background:#fff;padding:0 20px 92px;">
+<section id="faq" aria-label="Часто задаваемые вопросы" style="background:#fff;padding:0 20px 92px;">
   <div style="max-width:800px;margin:0 auto;">
     <div class="reveal" style="text-align:center;margin-bottom:24px;">
       <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;
@@ -1487,7 +1621,7 @@
       <div style="display:inline-flex;align-items:center;gap:8px;">
         <div style="width:28px;height:28px;min-width:28px;background:linear-gradient(135deg,#FF6B35,#e04d15);
                     border-radius:7px;display:flex;align-items:center;justify-content:center;">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M2 8l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
